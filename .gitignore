@@ -1,2 +1,7 @@
 # DS store
 .DS_Store
+
+.vscode
+.idea
+.pytest_cache
+__pycache__
