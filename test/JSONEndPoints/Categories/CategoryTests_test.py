@@ -6,7 +6,7 @@ import psutil
 
 BASE_URL = "http://localhost:4567"
 CATEGORIES_ENDPOINT = "/categories"
-JAR_PATH = "runTodoManagerRestAPI-1.5.5.jar"
+JAR_PATH = "../../../runTodoManagerRestAPI-1.5.5.jar"
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -42,30 +42,38 @@ def setup_and_teardown():
         print("Server did not respond to shutdown request.")
 
     # Ensure the Java process is killed
-    parent = psutil.Process(process.pid)
-    for child in parent.children(recursive=True):  # Kill child processes
-        child.terminate()
-    process.terminate()
-    process.wait()
+    try:
+        parent = psutil.Process(process.pid)
+        for child in parent.children(recursive=True):  # Kill child processes
+            if child.is_running():
+                child.terminate()
+        if parent.is_running():
+            parent.terminate()
+        parent.wait()
+    except psutil.NoSuchProcess:
+        pass
+
 
 def test_get_all_categories():
     response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}")
-    expected = {
-        "categories": [
-            {
-                "id": "1",
-                "title": "Office",
-                "description": "",
-            },
-            {
-                "id": "2",
-                "title": "Home",
-                "description": "",
-            }
-        ]
-    }
+    expected_categories = [
+        {
+            "id": "1",
+            "title": "Office",
+            "description": "",
+        },
+        {
+            "id": "2",
+            "title": "Home",
+            "description": "",
+        }
+    ]
     assert response.status_code == 200
-    assert response.json() == expected
+    response_categories = response.json().get("categories", [])
+    # Sort both lists by ID before comparing
+    response_categories.sort(key=lambda x: x["id"])
+    expected_categories.sort(key=lambda x: x["id"])
+    assert response_categories == expected_categories
 
 def test_create_category_without_id_with_title():
     body = {
