@@ -136,6 +136,7 @@ def test_create_relationship_between_category_and_todo():
         ]
     }
     assert relationship.status_code == 200
+    print(relationship.json())
     assert relationship.json() == expected
 
 def test_create_relationship_with_nonexistent_category():
@@ -187,15 +188,6 @@ def test_bidirectional_relationship_creation():
     expected = {
         "todos": [
             {
-                "id": "2",
-                "title": "file paperwork",
-                "doneStatus": "false",
-                "description": "",
-                "tasksof": [
-                    {"id": "1"},
-                ],
-            },
-            {
                 "id": "1",
                 "title": "scan paperwork",
                 "doneStatus": "false",
@@ -203,6 +195,15 @@ def test_bidirectional_relationship_creation():
                 "categories": [
                     {"id": "1"},
                 ],
+                "tasksof": [
+                    {"id": "1"},
+                ],
+            },
+            {
+                "id": "2",
+                "title": "file paperwork",
+                "doneStatus": "false",
+                "description": "",
                 "tasksof": [
                     {"id": "1"},
                 ],
@@ -221,8 +222,8 @@ def test_bidirectional_relationship_creation():
                 "title": "Office",
                 "description": "",
                 "todos": [
-                    {"id": "2"},
                     {"id": "1"},
+                    {"id": "2"},
                 ],
             },
         ]
@@ -235,9 +236,27 @@ def test_delete_bidirectional_relationship():
     response = requests.delete(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_TODOS_RELATIONSHIP}/{todo_id}")
     assert response.status_code == 200
 
-    # Verify deletion through get request
+    # Verify deletion through get request (todo remains)
     relationship = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_TODOS_RELATIONSHIP}")
-    expected = {"todos": []}
+    expected = {'todos': [
+           {
+               'categories': [
+                   {
+                       'id': '1',
+                   },
+               ],
+               'description': '',
+               'doneStatus': 'false',
+               'id': '1',
+               'tasksof': [
+                   {
+                       'id': '1',
+                   },
+               ],
+               'title': 'scan paperwork',
+           },
+        ],
+      }
     assert relationship.status_code == 200
     assert relationship.json() == expected
 

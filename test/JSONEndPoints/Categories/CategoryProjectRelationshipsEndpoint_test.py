@@ -72,8 +72,8 @@ def test_get_all_projects_for_category():
                 "active": "false",
                 "description": "",
                 "tasks": [
-                    {"id": "1"},
                     {"id": "2"},
+                    {"id": "1"},
                 ],
             },
         ]
@@ -93,8 +93,8 @@ def test_get_projects_for_nonexistent_category():
                 "active": "false",
                 "description": "",
                 "tasks": [
-                    {"id": "1"},
                     {"id": "2"},
+                    {"id": "1"},
                 ],
             },
         ]
@@ -169,8 +169,8 @@ def test_bidirectional_relationship_creation():
                 "active": "false",
                 "description": "",
                 "tasks": [
-                    {"id": "1"},
                     {"id": "2"},
+                    {"id": "1"},
                 ],
             },
         ]
