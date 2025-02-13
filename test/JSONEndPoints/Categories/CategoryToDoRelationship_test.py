@@ -11,7 +11,7 @@ CATEG_TODOS_RELATIONSHIP = "todos"
 CATEGORIES_RELATIONSHIP = "categories"
 VALID_ID = 1
 INVALID_ID = 20
-JAR_PATH = "runTodoManagerRestAPI-1.5.5.jar"
+JAR_PATH = "../../../runTodoManagerRestAPI-1.5.5.jar"
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_and_teardown():
