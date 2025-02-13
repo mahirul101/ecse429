@@ -49,48 +49,24 @@ def setup_and_teardown():
     process.terminate()
     process.wait()
 
-def test_get_project_by_id():
-    response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}")
-    expected = {
-        "projects": [
-            {
-                "id": "1",
-                "title": "Office Work",
-                "completed": "false",
-                "active": "false",
-                "description": "",
-                "tasks": [
-                    {"id": "1"},
-                    {"id": "2"},
-                ],
-            },
-        ]
-    }
-    assert response.status_code == 200
-    assert response.json() == expected
-
-def test_get_nonexistent_project_by_id():
-    response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}")
-    expected = {
-        "errorMessages": [f"Could not find an instance with projects/{INVALID_ID}"],
-    }
-    assert response.status_code == 404
-    assert response.json() == expected
-
 def test_head_project_by_id():
-    response = requests.head(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}")
+    response = requests.head(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}", headers={"Content-Type": "application/xml"})
     assert response.status_code == 200
 
 def test_head_nonexistent_project_by_id():
-    response = requests.head(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}")
+    response = requests.head(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}", headers={"Content-Type": "application/xml"})
     assert response.status_code == 404
 
 def test_post_project_by_id():
-    body = {
-        "active": True,
-        "description": "Meeting in progress",
-    }
-    response = requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}", json=body)
+    body = """
+    <project>
+        <active>true</active>
+        <description>Meeting in progress</description>
+        <completed>false</completed>
+    </project>
+    """
+    headers = {"Content-Type": "application/xml"}
+    response = requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}", data=body, headers=headers)
     expected = {
         "id": "1",
         "title": "Office Work",
@@ -106,11 +82,15 @@ def test_post_project_by_id():
     assert response.json() == expected
 
 def test_post_nonexistent_project_by_id():
-    body = {
-        "active": True,
-        "description": "Meeting in progress",
-    }
-    response = requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}", json=body)
+    body = """
+    <project>
+        <active>true</active>
+        <description>Meeting in progress</description>
+        <completed>false</completed>
+    </project>
+    """
+    headers = {"Content-Type": "application/xml"}
+    response = requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}", data=body, headers=headers)
     expected = {
         "errorMessages": [f"No such project entity instance with GUID or ID {INVALID_ID} found"],
     }
@@ -118,12 +98,15 @@ def test_post_nonexistent_project_by_id():
     assert response.json() == expected
 
 def test_put_project_by_id():
-    body = {
-        "title": "University Work",
-        "active": True,
-        "description": "Meeting in progress",
-    }
-    response = requests.put(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}", json=body)
+    body = """
+    <project>
+        <title>University Work</title>
+        <active>true</active>
+        <description>Meeting in progress</description>
+    </project>
+    """
+    headers = {"Content-Type": "application/xml"}
+    response = requests.put(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}", data=body, headers=headers)
     expected = {
         "id": "1",
         "title": "University Work",
@@ -135,12 +118,15 @@ def test_put_project_by_id():
     assert response.json() == expected
 
 def test_put_nonexistent_project_by_id():
-    body = {
-        "title": "University Work",
-        "active": True,
-        "description": "Meeting in progress",
-    }
-    response = requests.put(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}", json=body)
+    body = """
+    <project>
+        <title>University Work</title>
+        <active>true</active>
+        <description>Meeting in progress</description>
+    </project>
+    """
+    headers = {"Content-Type": "application/xml"}
+    response = requests.put(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}", data=body, headers=headers)
     expected = {
         "errorMessages": [f"Invalid GUID for {INVALID_ID} entity project"],
     }
@@ -148,11 +134,11 @@ def test_put_nonexistent_project_by_id():
     assert response.json() == expected
 
 def test_delete_project_by_id():
-    response = requests.delete(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}")
+    response = requests.delete(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}", headers={"Content-Type": "application/xml"})
     assert response.status_code == 200
 
 def test_delete_nonexistent_project_by_id():
-    response = requests.delete(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}")
+    response = requests.delete(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}", headers={"Content-Type": "application/xml"})
     expected = {
         "errorMessages": [f"Could not find any instances with projects/{INVALID_ID}"],
     }

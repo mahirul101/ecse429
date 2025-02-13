@@ -2,6 +2,7 @@ import requests
 import pytest
 import time
 import subprocess
+import psutil
 
 BASE_URL = "http://localhost:4567"
 CATEGORIES_ENDPOINT = "/categories"
@@ -10,27 +11,46 @@ CATEG_TODOS_RELATIONSHIP = "todos"
 CATEGORIES_RELATIONSHIP = "categories"
 VALID_ID = 1
 INVALID_ID = 20
-JAR_PATH = "C:/Users/dmytr/Desktop/SCHOOL/Winter_2025/ECSE_429/repo/runTodoManagerRestAPI-1.5.5.jar"
+JAR_PATH = "runTodoManagerRestAPI-1.5.5.jar"
 
-@pytest.fixture(scope="function", autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def setup_and_teardown():
-    # Start the Java application
-    process = subprocess.Popen(["java", "-jar", JAR_PATH])
+
+    # Start the Java application in the background
+    process = subprocess.Popen(
+        ["java", "-jar", JAR_PATH],
+        stdout=subprocess.DEVNULL,  # Hide logs
+        stderr=subprocess.DEVNULL
+    )
 
     # Wait for the server to be ready
-    server_ready = False
-    while not server_ready:
+    max_retries = 5
+    for attempt in range(max_retries):
         try:
-            requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}")
-            server_ready = True
+            response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}", timeout=2)
+            if response.status_code == 200:
+                break
         except requests.exceptions.ConnectionError:
             time.sleep(1)
+    else:
+        process.terminate()
+        raise RuntimeError("Server failed to start.")
 
+    # Tests are run here
     yield
 
-    # Shutdown the Java application
-    requests.get(f"{BASE_URL}/shutdown")
+    # Gracefully shut down the server
+    try:
+        requests.get(f"{BASE_URL}/shutdown")
+    except Exception:
+        print("Server did not respond to shutdown request.")
+
+    # Ensure the Java process is killed
+    parent = psutil.Process(process.pid)
+    for child in parent.children(recursive=True):  # Kill child processes
+        child.terminate()
     process.terminate()
+    process.wait()
 
 @pytest.fixture(scope="function", autouse=True)
 def create_relationship():
@@ -104,7 +124,7 @@ def test_create_relationship_between_category_and_todo():
                     {"id": "1"},
                 ],
             },
-            {
+                        {
                 "id": "2",
                 "title": "file paperwork",
                 "doneStatus": "false",
@@ -128,13 +148,23 @@ def test_create_relationship_with_nonexistent_category():
     assert response.json() == expected
 
 def test_delete_relationship_between_category_and_todo():
-    todo_id = 2
+    todo_id = 1
     response = requests.delete(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_TODOS_RELATIONSHIP}/{todo_id}")
     assert response.status_code == 200
 
     # Verify deletion through get request
     relationship = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_TODOS_RELATIONSHIP}")
-    expected = {"todos": []}
+    expected = {"todos": [{
+             'description': '',
+             'doneStatus': 'false',
+             'id': '2',
+             'tasksof': [
+                 {
+                     'id': '1',
+                 },
+             ],
+             'title': 'file paperwork',
+         },]}
     assert relationship.status_code == 200
     assert relationship.json() == expected
 

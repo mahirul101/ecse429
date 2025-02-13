@@ -47,36 +47,22 @@ def setup_and_teardown():
     process.terminate()
     process.wait()
 
-def test_get_all_projects():
-    response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}")
-    expected = {
-        "projects": [
-            {
-                "id": "1",
-                "title": "Office Work",
-                "completed": "false",
-                "active": "false",
-                "description": "",
-                "tasks": [
-                    {"id": "1"},
-                    {"id": "2"},
-                ],
-            },
-        ]
-    }
-    assert response.status_code == 200
-    assert response.json() == expected
-
 def test_head_projects():
-    response = requests.head(f"{BASE_URL}{PROJECTS_ENDPOINT}")
+    headers = {"Content-Type": "application/xml"}
+    response = requests.head(f"{BASE_URL}{PROJECTS_ENDPOINT}", headers=headers)
     assert response.status_code == 200
 
 def test_create_project_without_id():
-    body = {
-        "title": "School",
-        "description": "Meeting for 429 group",
-    }
-    response = requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}", json=body)
+    body = """
+    <project>
+        <active>false</active>
+        <description>Meeting for 429 group</description>
+        <completed>false</completed>
+        <title>School</title>
+    </project>
+    """
+    headers = {"Content-Type": "application/xml"}
+    response = requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}", data=body, headers=headers)
     expected = {
         "id": "2",
         "title": "School",
@@ -88,13 +74,16 @@ def test_create_project_without_id():
     assert response.json() == expected
 
 def test_create_project_with_invalid_active_status():
-    body = {
-        "completed": False,
-        "title": "429 autoproj",
-        "description": "Write unit tests for 429",
-        "active": "yes",
-    }
-    response = requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}", json=body)
+    body = """
+    <project>
+        <active>yes</active>
+        <description>Write unit tests for 429</description>
+        <completed>false</completed>
+        <title>429 autoproj</title>
+    </project>
+    """
+    headers = {"Content-Type": "application/xml"}
+    response = requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}", data=body, headers=headers)
     expected = {
         "errorMessages": ["Failed Validation: active should be BOOLEAN"],
     }

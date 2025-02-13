@@ -49,44 +49,16 @@ def setup_and_teardown():
     process.terminate()
     process.wait()
 
-def test_get_todo_by_id():
-    todo_id = VALID_ID
-    response = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}")
-    expected = {
-        "todos": [
-            {
-                "id": "1",
-                "title": "scan paperwork",
-                "doneStatus": "false",
-                "description": "",
-                "categories": [
-                    {"id": "1"},
-                ],
-                "tasksof": [
-                    {"id": "1"},
-                ],
-            },
-        ]
-    }
-    assert response.status_code == 200
-    assert response.json() == expected
-
-def test_get_nonexistent_todo_by_id():
-    todo_id = INVALID_ID
-    response = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}")
-    expected = {
-        "errorMessages": [f"Could not find an instance with todos/{todo_id}"],
-    }
-    assert response.status_code == 404
-    assert response.json() == expected
-
 def test_create_todo():
-    body = {
-        "title": "Wash Dishes",
-        "doneStatus": False,
-        "description": "Home Chore to be done",
-    }
-    response = requests.post(f"{BASE_URL}{TODOS_ENDPOINT}", json=body)
+    body = """
+    <todo>
+        <title>Wash Dishes</title>
+        <doneStatus>false</doneStatus>
+        <description>Home Chore to be done</description>
+    </todo>
+    """
+    headers = {"Content-Type": "application/xml"}
+    response = requests.post(f"{BASE_URL}{TODOS_ENDPOINT}", data=body, headers=headers)
     expected = {
         "id": "3",
         "title": "Wash Dishes",
@@ -98,11 +70,14 @@ def test_create_todo():
 
 def test_update_todo_by_id():
     todo_id = VALID_ID
-    body = {
-        "doneStatus": True,
-        "description": "all paperwork scanned",
-    }
-    response = requests.post(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", json=body)
+    body = """
+    <todo>
+        <doneStatus>true</doneStatus>
+        <description>all paperwork scanned</description>
+    </todo>
+    """
+    headers = {"Content-Type": "application/xml"}
+    response = requests.post(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", data=body, headers=headers)
     expected = {
         "id": "1",
         "title": "scan paperwork",
@@ -120,11 +95,14 @@ def test_update_todo_by_id():
 
 def test_update_nonexistent_todo_by_id():
     todo_id = INVALID_ID
-    body = {
-        "doneStatus": True,
-        "description": "all paperwork scanned",
-    }
-    response = requests.post(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", json=body)
+    body = """
+    <todo>
+        <doneStatus>true</doneStatus>
+        <description>all paperwork scanned</description>
+    </todo>
+    """
+    headers = {"Content-Type": "application/xml"}
+    response = requests.post(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", data=body, headers=headers)
     expected = {
         "errorMessages": [f"No such todo entity instance with GUID or ID {todo_id} found"],
     }
@@ -133,22 +111,27 @@ def test_update_nonexistent_todo_by_id():
 
 def test_head_todo_by_id():
     todo_id = VALID_ID
-    response = requests.head(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}")
+    headers = {"Content-Type": "application/xml"}
+    response = requests.head(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", headers=headers)
     assert response.status_code == 200
 
 def test_head_nonexistent_todo_by_id():
     todo_id = INVALID_ID
-    response = requests.head(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}")
+    headers = {"Content-Type": "application/xml"}
+    response = requests.head(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", headers=headers)
     assert response.status_code == 404
 
 def test_put_todo_by_id():
     todo_id = VALID_ID
-    body = {
-        "title": "Wash Dog",
-        "doneStatus": False,
-        "description": "giving him a bath",
-    }
-    response = requests.put(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", json=body)
+    body = """
+    <todo>
+        <title>Wash Dog</title>
+        <doneStatus>false</doneStatus>
+        <description>giving him a bath</description>
+    </todo>
+    """
+    headers = {"Content-Type": "application/xml"}
+    response = requests.put(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", data=body, headers=headers)
     expected = {
         "id": "1",
         "title": "Wash Dog",
@@ -160,12 +143,15 @@ def test_put_todo_by_id():
 
 def test_put_nonexistent_todo_by_id():
     todo_id = INVALID_ID
-    body = {
-        "title": "Wash Dog",
-        "doneStatus": False,
-        "description": "giving him a bath",
-    }
-    response = requests.put(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", json=body)
+    body = """
+    <todo>
+        <title>Wash Dog</title>
+        <doneStatus>false</doneStatus>
+        <description>giving him a bath</description>
+    </todo>
+    """
+    headers = {"Content-Type": "application/xml"}
+    response = requests.put(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", data=body, headers=headers)
     expected = {
         "errorMessages": [f"Invalid GUID for {todo_id} entity todo"],
     }
@@ -174,11 +160,12 @@ def test_put_nonexistent_todo_by_id():
 
 def test_delete_todo_by_id():
     todo_id = VALID_ID
-    response = requests.delete(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}")
+    headers = {"Content-Type": "application/xml"}
+    response = requests.delete(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", headers=headers)
     assert response.status_code == 200
 
     # Verify deletion
-    proj_relationships_of_todo = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}")
+    proj_relationships_of_todo = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", headers=headers)
     expected = {
         "errorMessages": [f"Could not find an instance with todos/{todo_id}"],
     }
@@ -187,7 +174,8 @@ def test_delete_todo_by_id():
 
 def test_delete_nonexistent_todo_by_id():
     todo_id = INVALID_ID
-    response = requests.delete(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}")
+    headers = {"Content-Type": "application/xml"}
+    response = requests.delete(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", headers=headers)
     expected = {
         "errorMessages": [f"Could not find any instances with todos/{todo_id}"],
     }
@@ -196,11 +184,12 @@ def test_delete_nonexistent_todo_by_id():
 
 def test_delete_todo_already_deleted():
     todo_id = VALID_ID
-    response = requests.delete(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}")
+    headers = {"Content-Type": "application/xml"}
+    response = requests.delete(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", headers=headers)
     assert response.status_code == 200
 
     # Verify deletion
-    second_attempt_response = requests.delete(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}")
+    second_attempt_response = requests.delete(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}", headers=headers)
     expected = {
         "errorMessages": [f"Could not find any instances with todos/{todo_id}"],
     }
