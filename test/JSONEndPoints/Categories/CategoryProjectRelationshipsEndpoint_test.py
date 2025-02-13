@@ -15,7 +15,7 @@ INVALID_ID = 20
 JAR_PATH = "../../../runTodoManagerRestAPI-1.5.5.jar"
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_and_teardown():
 
     # Start the Java application in the background
@@ -30,6 +30,7 @@ def setup_and_teardown():
     for attempt in range(max_retries):
         try:
             response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}", timeout=2)
+            create_relationship()
             if response.status_code == 200:
                 break
         except requests.exceptions.ConnectionError:
@@ -54,7 +55,6 @@ def setup_and_teardown():
     process.terminate()
     process.wait()
 
-@pytest.fixture(scope="function", autouse=True)
 def create_relationship():
     try:
         requests.post(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_PROJ_RELATIONSHIP}", json={"id": "1"})
@@ -63,6 +63,8 @@ def create_relationship():
 
 def test_get_all_projects_for_category():
     response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_PROJ_RELATIONSHIP}")
+    assert response.status_code == 200
+
     expected = {
         "projects": [
             {
@@ -78,12 +80,21 @@ def test_get_all_projects_for_category():
             },
         ]
     }
-    assert response.status_code == 200
-    assert response.json() == expected
+
+    # Sort the tasks list within each project before comparing
+    response_projects = response.json().get("projects", [])
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    for project in expected["projects"]:
+        project["tasks"].sort(key=lambda x: x["id"])
+
+    assert response_projects == expected["projects"]
 
 
 def test_get_projects_for_nonexistent_category():
     response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{INVALID_ID}/{CATEG_PROJ_RELATIONSHIP}")
+    assert response.status_code == 200
+
     expected = {
         "projects": [
             {
@@ -99,8 +110,15 @@ def test_get_projects_for_nonexistent_category():
             },
         ]
     }
-    assert response.status_code == 200
-    assert response.json() == expected
+
+    # Sort the tasks list within each project before comparing
+    response_projects = response.json().get("projects", [])
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    for project in expected["projects"]:
+        project["tasks"].sort(key=lambda x: x["id"])
+
+    assert response_projects == expected["projects"]
 
 def test_head_projects_for_category():
     response = requests.head(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_PROJ_RELATIONSHIP}")
@@ -160,6 +178,8 @@ def test_bidirectional_relationship_creation():
 
     # Check that the relationship exists from category to projects
     relationship = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID2}/{CATEG_PROJ_RELATIONSHIP}")
+    assert relationship.status_code == 200
+
     expected = {
         "projects": [
             {
@@ -175,8 +195,15 @@ def test_bidirectional_relationship_creation():
             },
         ]
     }
-    assert relationship.status_code == 200
-    assert relationship.json() == expected
+
+    # Sort the tasks list within each project before comparing
+    response_projects = relationship.json().get("projects", [])
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    for project in expected["projects"]:
+        project["tasks"].sort(key=lambda x: x["id"])
+
+    assert response_projects == expected["projects"]
 
     # Check if project to category relationship is created (FAILURE - NONEXISTENT)
     proj_category_rel = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}/{body['id']}/{CATEGORIES_RELATIONSHIP}")

@@ -10,7 +10,7 @@ VALID_ID = 1
 INVALID_ID = 20
 JAR_PATH = "../../../runTodoManagerRestAPI-1.5.5.jar"
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_and_teardown():
 
     # Start the Java application in the background
