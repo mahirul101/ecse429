@@ -6,7 +6,8 @@ import psutil
 
 BASE_URL = "http://localhost:4567"
 PROJECTS_ENDPOINT = "/projects"
-JAR_PATH = "runTodoManagerRestAPI-1.5.5.jar"
+CATEGORIES_ENDPOINT = "/categories"
+JAR_PATH = "../../../runTodoManagerRestAPI-1.5.5.jar"
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_and_teardown():
@@ -41,31 +42,40 @@ def setup_and_teardown():
         print("Server did not respond to shutdown request.")
 
     # Ensure the Java process is killed
-    parent = psutil.Process(process.pid)
-    for child in parent.children(recursive=True):  # Kill child processes
-        child.terminate()
-    process.terminate()
-    process.wait()
-
+    try:
+        parent = psutil.Process(process.pid)
+        for child in parent.children(recursive=True):  # Kill child processes
+            if child.is_running():
+                child.terminate()
+        if parent.is_running():
+            parent.terminate()
+        parent.wait()
+    except psutil.NoSuchProcess:
+        pass
+    
 def test_get_all_projects():
     response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}")
-    expected = {
-        "projects": [
-            {
-                "id": "1",
-                "title": "Office Work",
-                "completed": "false",
-                "active": "false",
-                "description": "",
-                "tasks": [
-                    {"id": "1"},
-                    {"id": "2"},
-                ],
-            },
-        ]
-    }
+    expected_projects = [
+        {
+            "id": "1",
+            "title": "Office Work",
+            "completed": "false",
+            "active": "false",
+            "description": "",
+            "tasks": [
+                {"id": "1"},
+                {"id": "2"},
+            ],
+        },
+    ]
     assert response.status_code == 200
-    assert response.json() == expected
+    response_projects = response.json().get("projects", [])
+    # Sort tasks by ID before comparing
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    for project in expected_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    assert response_projects == expected_projects
 
 def test_head_projects():
     response = requests.head(f"{BASE_URL}{PROJECTS_ENDPOINT}")

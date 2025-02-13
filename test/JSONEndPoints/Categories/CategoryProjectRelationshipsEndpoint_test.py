@@ -12,7 +12,7 @@ CATEGORIES_RELATIONSHIP = "categories"
 VALID_ID = 1
 VALID_ID2 = 2
 INVALID_ID = 20
-JAR_PATH = "runTodoManagerRestAPI-1.5.5.jar"
+JAR_PATH = "../../../runTodoManagerRestAPI-1.5.5.jar"
 
 
 @pytest.fixture(scope="session", autouse=True)
