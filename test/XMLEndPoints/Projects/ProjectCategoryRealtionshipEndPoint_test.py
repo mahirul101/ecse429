@@ -9,9 +9,9 @@ PROJECTS_ENDPOINT = "/projects"
 CATEGORIES_RELATIONSHIP = "categories"
 VALID_ID = 1
 INVALID_ID = 20
-JAR_PATH = "runTodoManagerRestAPI-1.5.5.jar"
+JAR_PATH = "../../runTodoManagerRestAPI-1.5.5.jar"
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_and_teardown():
 
     # Start the Java application in the background
@@ -25,7 +25,8 @@ def setup_and_teardown():
     max_retries = 5
     for attempt in range(max_retries):
         try:
-            response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}", timeout=2)
+            response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}", timeout=2)
+            create_relationship()
             if response.status_code == 200:
                 break
         except requests.exceptions.ConnectionError:
@@ -50,7 +51,6 @@ def setup_and_teardown():
     process.terminate()
     process.wait()
 
-@pytest.fixture(scope="function", autouse=True)
 def create_relationship():
     try:
         requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}/{CATEGORIES_RELATIONSHIP}", json={"id": "1"})

@@ -8,9 +8,9 @@ BASE_URL = "http://localhost:4567"
 PROJECTS_ENDPOINT = "/projects"
 VALID_ID = 1
 INVALID_ID = 20
-JAR_PATH = "runTodoManagerRestAPI-1.5.5.jar"
+JAR_PATH = "../../runTodoManagerRestAPI-1.5.5.jar"
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_and_teardown():
 
     # Start the Java application in the background
@@ -24,7 +24,7 @@ def setup_and_teardown():
     max_retries = 5
     for attempt in range(max_retries):
         try:
-            response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}", timeout=2)
+            response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}", timeout=2)
             if response.status_code == 200:
                 break
         except requests.exceptions.ConnectionError:
@@ -79,7 +79,13 @@ def test_post_project_by_id():
         ],
     }
     assert response.status_code == 200
-    assert response.json() == expected
+
+    # Sort the tasks list in both actual and expected responses
+    actual_response = response.json()
+    actual_response["tasks"] = sorted(actual_response["tasks"], key=lambda x: x["id"])
+    expected["tasks"] = sorted(expected["tasks"], key=lambda x: x["id"])
+
+    assert actual_response == expected
 
 def test_post_nonexistent_project_by_id():
     body = """
