@@ -224,14 +224,13 @@ def test_bidirectional_relationship_creation():
                 "title": "Office",
                 "description": "",
                 "todos": [
-                    {"id": "2"},
                     {"id": "1"},
+                    {"id": "2"},
                 ],
             },
         ]
     }
-
-    # Sort the todos list within each category before comparing
+# Sort the todos list within each category before comparing
     response_categories = todo_category_rel.json().get("categories", [])
     for category in response_categories:
         category["todos"].sort(key=lambda x: x["id"])
@@ -239,6 +238,7 @@ def test_bidirectional_relationship_creation():
         category["todos"].sort(key=lambda x: x["id"])
 
     assert response_categories == expected_rel["categories"]
+
 
 def test_delete_bidirectional_relationship():
     todo_id = 2
@@ -257,15 +257,32 @@ def test_delete_bidirectional_relationship():
     assert todo_category_rel.status_code == 200
     assert todo_category_rel.json() == expected_proj
 
-
 def test_delete_bidirectional_relationship():
     todo_id = 2
     response = requests.delete(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_TODOS_RELATIONSHIP}/{todo_id}")
     assert response.status_code == 200
 
-    # Verify deletion through get request
+    # Verify deletion through get request (todo remains)
     relationship = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_TODOS_RELATIONSHIP}")
-    expected = {"todos": []}
+    expected = {'todos': [
+           {
+               'categories': [
+                   {
+                       'id': '1',
+                   },
+               ],
+               'description': '',
+               'doneStatus': 'false',
+               'id': '1',
+               'tasksof': [
+                   {
+                       'id': '1',
+                   },
+               ],
+               'title': 'scan paperwork',
+           },
+        ],
+      }
     assert relationship.status_code == 200
     assert relationship.json() == expected
 

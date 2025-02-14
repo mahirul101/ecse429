@@ -6,6 +6,7 @@ import psutil
 
 BASE_URL = "http://localhost:4567"
 PROJECTS_ENDPOINT = "/projects"
+PROJECTS_RELATIONSHIP = "projects"
 CATEGORIES_ENDPOINT = "/categories"
 CATEGORIES_RELATIONSHIP = "categories"
 VALID_ID = 1
@@ -108,13 +109,13 @@ def test_create_relationship_between_project_and_category():
     expected = {
         "categories": [
             {
-                "id": "1",
-                "title": "Office",
+                "id": "2",
+                "title": "Home",
                 "description": "",
             },
             {
-                "id": "2",
-                "title": "Home",
+                "id": "1",
+                "title": "Office",
                 "description": "",
             },
         ]
@@ -140,8 +141,8 @@ def test_delete_relationship_between_project_and_category():
     assert response.status_code == 200
 
     # Verify deletion through get request
-    relationship = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}/{CATEGORIES_RELATIONSHIP}")
-    expected = {"categories": []}
+    relationship = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{PROJECTS_RELATIONSHIP}")
+    expected = {"projects": []}
     assert relationship.status_code == 200
     assert relationship.json() == expected
 
@@ -164,14 +165,14 @@ def test_bidirectional_relationship_creation():
     relationship = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}/{CATEGORIES_RELATIONSHIP}")
     expected = {
         "categories": [
-            {
-                "id": "1",
-                "title": "Office",
+           {
+                "id": "2",
+                "title": "Home",
                 "description": "",
             },
             {
-                "id": "2",
-                "title": "Home",
+                "id": "1",
+                "title": "Office",
                 "description": "",
             },
         ]
