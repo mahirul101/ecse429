@@ -81,10 +81,16 @@ def test_get_all_categories_for_project():
     expected["categories"].sort(key=lambda x: x["id"])
     assert response_categories == expected["categories"]
 
-def test_get_categories_for_nonexistent_project():
+def testknownbug_get_categories_for_nonexistent_project():
     response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}/{CATEGORIES_RELATIONSHIP}")
     expected = {
-        "errorMessages": [f"Could not find any instances with projects/{INVALID_ID}/categories"]
+        'categories': [
+            {
+                'description': '',
+                'id': '1',
+                'title': 'Office',
+            },
+        ],
     }
     # This is a bug in the API, it should return a 404 status code #
     assert response.status_code == 200
@@ -94,7 +100,7 @@ def test_head_categories_for_project():
     response = requests.head(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}/{CATEGORIES_RELATIONSHIP}")
     assert response.status_code == 200
 
-def test_head_categories_for_nonexistent_project():
+def testknownbug_head_categories_for_nonexistent_project():
     response = requests.head(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}/{CATEGORIES_RELATIONSHIP}")
     # This is a bug in the API, it should return a 404 status code #
     assert response.status_code == 200
@@ -152,11 +158,10 @@ def test_delete_nonexistent_relationship_between_project_and_category():
     expected = {
         "errorMessages": [f"Could not find any instances with projects/{VALID_ID}/categories/{categ_id}"],
     }
-    # This is a bug in the API, it should return a 404 status code #
-    assert response.status_code == 200
+    assert response.status_code == 404
     assert response.json() == expected
 
-def test_bidirectional_relationship_creation():
+def testknownbug_bidirectional_relationship_creation():
     body = {"id": "2"}
     response = requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}/{CATEGORIES_RELATIONSHIP}", json=body)
     assert response.status_code == 201
