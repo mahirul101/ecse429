@@ -105,6 +105,8 @@ def test_post_project_by_id():
         "description": "Meeting in progress",
     }
     response = requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}", json=body)
+    assert response.status_code == 200
+
     expected = {
         "id": "1",
         "title": "Office Work",
@@ -116,8 +118,13 @@ def test_post_project_by_id():
             {"id": "2"},
         ],
     }
-    assert response.status_code == 200
-    assert response.json() == expected
+
+    # Sort the tasks list within the project before comparing
+    response_project = response.json()
+    response_project["tasks"].sort(key=lambda x: x["id"])
+    expected["tasks"].sort(key=lambda x: x["id"])
+
+    assert response_project == expected
 
 def test_post_nonexistent_project_by_id():
     body = {

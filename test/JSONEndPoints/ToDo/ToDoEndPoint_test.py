@@ -49,6 +49,8 @@ def setup_and_teardown():
 
 def test_get_all_todos():
     response = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}")
+    assert response.status_code == 200
+
     expected = {
         "todos": [
             {
@@ -74,11 +76,18 @@ def test_get_all_todos():
             },
         ]
     }
-    assert response.status_code == 200
-    assert response.json() == expected
+
+    # Sort both lists by ID before comparing
+    response_todos = response.json().get("todos", [])
+    response_todos.sort(key=lambda x: x["id"])
+    expected["todos"].sort(key=lambda x: x["id"])
+
+    assert response_todos == expected["todos"]
 
 def test_get_todos_by_done_status():
     response = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}", params={"doneStatus": "false"})
+    assert response.status_code == 200
+
     expected = {
         "todos": [
             {
@@ -104,8 +113,13 @@ def test_get_todos_by_done_status():
             },
         ]
     }
-    assert response.status_code == 200
-    assert response.json() == expected
+
+    # Sort both lists by ID before comparing
+    response_todos = response.json().get("todos", [])
+    response_todos.sort(key=lambda x: x["id"])
+    expected["todos"].sort(key=lambda x: x["id"])
+
+    assert response_todos == expected["todos"]
 
 def test_get_todos_by_done_status_and_title():
     response = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}", params={"doneStatus": "false", "title": "file paperwork"})

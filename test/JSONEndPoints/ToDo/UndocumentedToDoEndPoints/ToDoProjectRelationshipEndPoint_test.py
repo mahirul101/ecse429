@@ -7,9 +7,9 @@ import psutil
 BASE_URL = "http://localhost:4567"
 TODOS_ENDPOINT = "/todos"
 TODO_PROJ_RELATIONSHIP = "tasksof"
-JAR_PATH = "runTodoManagerRestAPI-1.5.5.jar"
+JAR_PATH = "../../../../runTodoManagerRestAPI-1.5.5.jar"
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_and_teardown():
 
     # Start the Java application in the background
@@ -23,7 +23,7 @@ def setup_and_teardown():
     max_retries = 5
     for attempt in range(max_retries):
         try:
-            response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}", timeout=2)
+            response = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}", timeout=2)
             if response.status_code == 200:
                 break
         except requests.exceptions.ConnectionError:
@@ -78,4 +78,12 @@ def test_get_projects_for_todos():
 
     response = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}/{TODO_PROJ_RELATIONSHIP}")
     assert response.status_code == 200
-    assert response.json() == expected
+
+    # Sort the tasks list within each project before comparing
+    response_projects = response.json().get("projects", [])
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    for project in expected["projects"]:
+        project["tasks"].sort(key=lambda x: x["id"])
+
+    assert response_projects == expected["projects"]

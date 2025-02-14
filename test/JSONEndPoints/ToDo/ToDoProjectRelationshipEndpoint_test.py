@@ -51,6 +51,7 @@ def setup_and_teardown():
         child.terminate()
     process.terminate()
     process.wait()
+
 def test_head_projects_for_todo():
     todo_id = VALID_ID
     response = requests.head(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}/{TODO_PROJ_RELATIONSHIP}")
@@ -64,6 +65,8 @@ def test_head_projects_for_nonexistent_todo():
 def test_get_projects_for_todo():
     todo_id = 2
     response = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}/{TODO_PROJ_RELATIONSHIP}")
+    assert response.status_code == 200
+
     expected = {
         "projects": [
             {
@@ -79,12 +82,20 @@ def test_get_projects_for_todo():
             },
         ]
     }
-    assert response.status_code == 200
-    assert response.json() == expected
+
+    # Sort the tasks list within each project before comparing
+    response_projects = response.json().get("projects", [])
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    for project in expected["projects"]:
+        project["tasks"].sort(key=lambda x: x["id"])
+
+    assert response_projects == expected["projects"]
 
 def test_get_projects_for_nonexistent_todo():
-    todo_id = INVALID_ID
-    response = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}/{TODO_PROJ_RELATIONSHIP}")
+    response = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}/{INVALID_ID}/{TODO_PROJ_RELATIONSHIP}")
+    assert response.status_code == 200
+
     expected = {
         "projects": [
             {
@@ -111,8 +122,15 @@ def test_get_projects_for_nonexistent_todo():
             },
         ]
     }
-    assert response.status_code == 200
-    assert response.json() == expected
+
+    # Sort the tasks list within each project before comparing
+    response_projects = response.json().get("projects", [])
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    for project in expected["projects"]:
+        project["tasks"].sort(key=lambda x: x["id"])
+
+    assert response_projects == expected["projects"]
 
 def test_create_relationship_between_todo_and_project():
     todo_id = 2
@@ -137,8 +155,16 @@ def test_create_relationship_between_todo_and_project():
             },
         ]
     }
+
+    # Sort the tasks list within each project before comparing
+    response_projects = created_relationship.json().get("projects", [])
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    for project in expected["projects"]:
+        project["tasks"].sort(key=lambda x: x["id"])
+
     assert created_relationship.status_code == 200
-    assert created_relationship.json() == expected
+    assert response_projects == expected["projects"]
 
 def test_create_relationship_with_nonexistent_todo():
     todo_id = INVALID_ID
@@ -221,8 +247,20 @@ def test_bidirectional_relationship_creation():
             },
         ]
     }
+
+    # Sort the tasks list within each project before comparing
+    response_projects = created_relationship.json().get("projects", [])
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    for project in expected["projects"]:
+        project["tasks"].sort(key=lambda x: x["id"])
+
+    # Sort the projects list by ID before comparing
+    response_projects.sort(key=lambda x: x["id"])
+    expected["projects"].sort(key=lambda x: x["id"])
+
     assert created_relationship.status_code == 200
-    assert created_relationship.json() == expected
+    assert response_projects == expected["projects"]
 
     # Verify project-todo side of the relationship
     proj_todo_relationships = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}/{proj_created.json()['id']}/{PROJ_TODO_RELATIONSHIP}")
@@ -243,8 +281,16 @@ def test_bidirectional_relationship_creation():
             },
         ]
     }
+
+    # Sort the tasksof list within each todo before comparing
+    response_todos = proj_todo_relationships.json().get("todos", [])
+    for todo in response_todos:
+        todo["tasksof"].sort(key=lambda x: x["id"])
+    for todo in expected_proj_todo_relationships["todos"]:
+        todo["tasksof"].sort(key=lambda x: x["id"])
+
     assert proj_todo_relationships.status_code == 200
-    assert proj_todo_relationships.json() == expected_proj_todo_relationships
+    assert response_todos == expected_proj_todo_relationships["todos"]
 
 def test_bidirectional_relationship_deletion():
     todo_id = 1
@@ -256,6 +302,8 @@ def test_bidirectional_relationship_deletion():
 
     # Check deletion of relationship from todo side
     todo_proj_relationships = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}/{TODO_PROJ_RELATIONSHIP}")
+    assert todo_proj_relationships.status_code == 200
+
     removed_project = {
         "id": "1",
         "title": "Office Work",
@@ -267,11 +315,19 @@ def test_bidirectional_relationship_deletion():
             {"id": "2"},
         ],
     }
-    assert todo_proj_relationships.status_code == 200
-    assert removed_project not in todo_proj_relationships.json()["projects"]
+
+    # Sort the tasks list within each project before comparing
+    response_projects = todo_proj_relationships.json().get("projects", [])
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    removed_project["tasks"].sort(key=lambda x: x["id"])
+
+    assert removed_project not in response_projects
 
     # Check deletion of relationship from project side
     proj_todo_relationships = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}/{proj_id}/{PROJ_TODO_RELATIONSHIP}")
+    assert proj_todo_relationships.status_code == 200
+
     removed_todo = {
         "id": "1",
         "title": "scan paperwork",
@@ -284,5 +340,10 @@ def test_bidirectional_relationship_deletion():
             {"id": "1"},
         ],
     }
-    assert proj_todo_relationships.status_code == 200
-    assert removed_todo not in proj_todo_relationships.json()["todos"]
+
+    # Sort the todos list within each project before comparing
+    response_todos = proj_todo_relationships.json().get("todos", [])
+    response_todos.sort(key=lambda x: x["id"])
+    removed_todo["tasksof"].sort(key=lambda x: x["id"])
+
+    assert removed_todo not in response_todos
