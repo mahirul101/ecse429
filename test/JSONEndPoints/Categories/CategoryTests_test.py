@@ -44,15 +44,17 @@ def setup_and_teardown():
     # Ensure the Java process is killed
     try:
         parent = psutil.Process(process.pid)
-        for child in parent.children(recursive=True):  # Kill child processes
+        for child in parent.children(recursive=True):
             if child.is_running():
                 child.terminate()
+        psutil.wait_procs(parent.children(), timeout=5)  # Ensure all children terminate
         if parent.is_running():
             parent.terminate()
-        parent.wait()
+            parent.wait(timeout=5)
     except psutil.NoSuchProcess:
         pass
-
+    except Exception as e:
+        print(f"Error occurred while terminating processes: {e}")
 
 def test_get_all_categories():
     response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}")

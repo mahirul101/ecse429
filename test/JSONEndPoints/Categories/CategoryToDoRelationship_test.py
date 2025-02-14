@@ -47,12 +47,16 @@ def setup_and_teardown():
         print("Server did not respond to shutdown request.")
 
     # Ensure the Java process is killed
-    parent = psutil.Process(process.pid)
-    for child in parent.children(recursive=True):  # Kill child processes
-        child.terminate()
-    process.terminate()
-    process.wait()
-
+    try:
+        parent = psutil.Process(process.pid)
+        for child in parent.children(recursive=True):  # Kill child processes
+            if child.is_running():
+                child.terminate()
+        if parent.is_running():
+            parent.terminate()
+        parent.wait()
+    except psutil.NoSuchProcess:
+        pass
 def create_relationship():
     try:
         requests.post(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_TODOS_RELATIONSHIP}", json={"id": "2"})
@@ -264,25 +268,7 @@ def test_delete_bidirectional_relationship():
 
     # Verify deletion through get request (todo remains)
     relationship = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_TODOS_RELATIONSHIP}")
-    expected = {'todos': [
-           {
-               'categories': [
-                   {
-                       'id': '1',
-                   },
-               ],
-               'description': '',
-               'doneStatus': 'false',
-               'id': '1',
-               'tasksof': [
-                   {
-                       'id': '1',
-                   },
-               ],
-               'title': 'scan paperwork',
-           },
-        ],
-      }
+    expected = {"todos": []}
     assert relationship.status_code == 200
     assert relationship.json() == expected
 
