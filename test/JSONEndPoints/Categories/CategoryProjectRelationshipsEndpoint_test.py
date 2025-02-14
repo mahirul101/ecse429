@@ -29,7 +29,7 @@ def setup_and_teardown():
     max_retries = 5
     for attempt in range(max_retries):
         try:
-            response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}", timeout=2)
+            response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}", timeout=2)
             create_relationship()
             if response.status_code == 200:
                 break
@@ -49,11 +49,17 @@ def setup_and_teardown():
         print("Server did not respond to shutdown request.")
 
     # Ensure the Java process is killed
-    parent = psutil.Process(process.pid)
-    for child in parent.children(recursive=True):  # Kill child processes
-        child.terminate()
-    process.terminate()
-    process.wait()
+    try:
+        parent = psutil.Process(process.pid)
+        for child in parent.children(recursive=True):  # Kill child processes
+            if child.is_running():
+                child.terminate()
+        if parent.is_running():
+            parent.terminate()
+        parent.wait()
+    except psutil.NoSuchProcess:
+        pass
+
 
 def create_relationship():
     try:

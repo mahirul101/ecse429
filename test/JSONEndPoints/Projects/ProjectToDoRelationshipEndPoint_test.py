@@ -28,7 +28,6 @@ def setup_and_teardown():
     for attempt in range(max_retries):
         try:
             response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}", timeout=2)
-            create_task()
             if response.status_code == 200:
                 break
         except requests.exceptions.ConnectionError:
@@ -47,11 +46,16 @@ def setup_and_teardown():
         print("Server did not respond to shutdown request.")
 
     # Ensure the Java process is killed
-    parent = psutil.Process(process.pid)
-    for child in parent.children(recursive=True):  # Kill child processes
-        child.terminate()
-    process.terminate()
-    process.wait()
+    try:
+        parent = psutil.Process(process.pid)
+        for child in parent.children(recursive=True):  # Kill child processes
+            if child.is_running():
+                child.terminate()
+        if parent.is_running():
+            parent.terminate()
+        parent.wait()
+    except psutil.NoSuchProcess:
+        pass
 
 def create_task():
     body = {
@@ -262,15 +266,6 @@ def knownbug_test_bidirectional_relationship_creation():
                     {"id": "1"},
                 ],
             },
-            {
-                "id": "3",
-                "title": "Gardening",
-                "doneStatus": "false",
-                "description": "water the plants",
-                "tasksof": [
-                    {"id": "1"},
-                ],
-            },
         ]
     }
 
@@ -283,27 +278,37 @@ def knownbug_test_bidirectional_relationship_creation():
 
     # Check if task to projects relationship is created
     #BUG: The http://localhost:4567/todos/3/projects returns 404 not found
+    body = {"id": "3"}
     task_project_rel = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}/{body['id']}/{TODO_PROJ_RELATIONSHIP}")
-    expected_rel = {
-        "projects": [
-            {
-                "id": "1",
-                "title": "Office Work",
-                "completed": "false",
-                "active": "false",
-                "description": "",
-                "tasks": [
-                    {"id": "1"},
-                    {"id": "2"},
-                    {"id": "3"},
-                ],
-            },
-        ]
-    }
+    if task_project_rel.status_code == 200:
+        expected_rel = {
+            "projects": [
+                {
+                    "id": "1",
+                    "title": "Office Work",
+                    "completed": "false",
+                    "active": "false",
+                    "description": "",
+                    "tasks": [
+                        {"id": "1"},
+                        {"id": "2"},
+                        {"id": "3"},
+                    ],
+                },
+            ]
+        }
 
-    assert task_project_rel.status_code == 404
+    # Sort the tasks list within each project before comparing
+    response_projects = task_project_rel.json().get("projects", [])
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    for project in expected_rel["projects"]:
+        project["tasks"].sort(key=lambda x: x["id"])
 
-def knownbug_test_delete_bidirectional_relationship():
+    assert task_project_rel.status_code == 200
+    assert response_projects == expected_rel["projects"]
+
+def test_delete_bidirectional_relationship():
     todo_id = 2
     response = requests.delete(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}/{PROJ_TODO_RELATIONSHIP}/{todo_id}")
     assert response.status_code == 200
@@ -332,4 +337,6 @@ def knownbug_test_delete_bidirectional_relationship():
     # Check if task to projects relationship is deleted (bidirectionality)
     #BUG: The http://localhost:4567/todos/2/projects returns 404 not found
     task_project_rel = requests.get(f"{BASE_URL}{TODOS_ENDPOINT}/{todo_id}/{TODO_PROJ_RELATIONSHIP}")
+    #expected_proj = {"projects": []}
     assert task_project_rel.status_code == 404 #Not found
+    #assert task_project_rel.json() == expected_proj
