@@ -7,7 +7,7 @@ import psutil
 BASE_URL = "http://localhost:4567"
 TODOS_ENDPOINT = "/todos"
 CATEGORIES_RELATIONSHIP = "categories"
-JAR_PATH = "../../../../runTodoManagerRestAPI-1.5.5.jar"
+JAR_PATH = "../../../runTodoManagerRestAPI-1.5.5.jar"
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_and_teardown():

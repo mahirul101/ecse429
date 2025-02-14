@@ -102,6 +102,7 @@ def test_head_categories_for_project():
 
 def testknownbug_head_categories_for_nonexistent_project():
     response = requests.head(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}/{CATEGORIES_RELATIONSHIP}")
+    #BUG: The API should return a 404 status code
     # This is a bug in the API, it should return a 404 status code #
     assert response.status_code == 200
 
