@@ -8,9 +8,9 @@ BASE_URL = "http://localhost:4567"
 PROJECTS_ENDPOINT = "/projects"
 VALID_ID = 1
 INVALID_ID = 20
-JAR_PATH = "runTodoManagerRestAPI-1.5.5.jar"
+JAR_PATH = "../../../runTodoManagerRestAPI-1.5.5.jar"
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_and_teardown():
 
     # Start the Java application in the background
@@ -24,7 +24,7 @@ def setup_and_teardown():
     max_retries = 5
     for attempt in range(max_retries):
         try:
-            response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}", timeout=2)
+            response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}", timeout=2)
             if response.status_code == 200:
                 break
         except requests.exceptions.ConnectionError:
@@ -43,14 +43,21 @@ def setup_and_teardown():
         print("Server did not respond to shutdown request.")
 
     # Ensure the Java process is killed
-    parent = psutil.Process(process.pid)
-    for child in parent.children(recursive=True):  # Kill child processes
-        child.terminate()
-    process.terminate()
-    process.wait()
+    try:
+        parent = psutil.Process(process.pid)
+        for child in parent.children(recursive=True):  # Kill child processes
+            if child.is_running():
+                child.terminate()
+        if parent.is_running():
+            parent.terminate()
+        parent.wait()
+    except psutil.NoSuchProcess:
+        pass
 
 def test_get_project_by_id():
     response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}")
+    assert response.status_code == 200
+
     expected = {
         "projects": [
             {
@@ -66,8 +73,15 @@ def test_get_project_by_id():
             },
         ]
     }
-    assert response.status_code == 200
-    assert response.json() == expected
+
+    # Sort the tasks list within each project before comparing
+    response_projects = response.json().get("projects", [])
+    for project in response_projects:
+        project["tasks"].sort(key=lambda x: x["id"])
+    for project in expected["projects"]:
+        project["tasks"].sort(key=lambda x: x["id"])
+
+    assert response_projects == expected["projects"]
 
 def test_get_nonexistent_project_by_id():
     response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}/{INVALID_ID}")

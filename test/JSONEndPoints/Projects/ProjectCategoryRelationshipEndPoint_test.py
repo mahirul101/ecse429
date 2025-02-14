@@ -12,7 +12,7 @@ VALID_ID = 1
 INVALID_ID = 20
 JAR_PATH = "../../../runTodoManagerRestAPI-1.5.5.jar"
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_and_teardown():
 
     # Start the Java application in the background
@@ -26,7 +26,8 @@ def setup_and_teardown():
     max_retries = 5
     for attempt in range(max_retries):
         try:
-            response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}", timeout=2)
+            response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}", timeout=2)
+            create_relationship()
             if response.status_code == 200:
                 break
         except requests.exceptions.ConnectionError:
@@ -56,7 +57,6 @@ def setup_and_teardown():
     except psutil.NoSuchProcess:
         pass
 
-@pytest.fixture(scope="function", autouse=True)
 def create_relationship():
     try:
         requests.post(f"{BASE_URL}{PROJECTS_ENDPOINT}/{VALID_ID}/{CATEGORIES_RELATIONSHIP}", json={"id": "1"})
@@ -85,7 +85,7 @@ def test_get_categories_for_nonexistent_project():
     expected = {
         "errorMessages": [f"Could not find any instances with projects/{INVALID_ID}/categories"]
     }
-    # This is a bug in the API, it should return a 404 status code # 
+    # This is a bug in the API, it should return a 404 status code #
     assert response.status_code == 200
     assert response.json() == expected
 

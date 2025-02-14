@@ -6,10 +6,9 @@ import psutil
 
 BASE_URL = "http://localhost:4567"
 PROJECTS_ENDPOINT = "/projects"
-CATEGORIES_ENDPOINT = "/categories"
 JAR_PATH = "../../../runTodoManagerRestAPI-1.5.5.jar"
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_and_teardown():
 
     # Start the Java application in the background
@@ -23,7 +22,7 @@ def setup_and_teardown():
     max_retries = 5
     for attempt in range(max_retries):
         try:
-            response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}", timeout=2)
+            response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}", timeout=2)
             if response.status_code == 200:
                 break
         except requests.exceptions.ConnectionError:
@@ -52,7 +51,7 @@ def setup_and_teardown():
         parent.wait()
     except psutil.NoSuchProcess:
         pass
-    
+
 def test_get_all_projects():
     response = requests.get(f"{BASE_URL}{PROJECTS_ENDPOINT}")
     expected_projects = [
