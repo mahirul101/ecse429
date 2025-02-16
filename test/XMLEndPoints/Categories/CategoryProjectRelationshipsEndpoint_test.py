@@ -10,9 +10,9 @@ CATEG_PROJ_RELATIONSHIP = "projects"
 VALID_ID = 1
 VALID_ID2 = 2
 INVALID_ID = 20
-JAR_PATH = "runTodoManagerRestAPI-1.5.5.jar"
+JAR_PATH = "../../runTodoManagerRestAPI-1.5.5.jar"
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_and_teardown():
 
     # Start the Java application in the background
@@ -27,6 +27,7 @@ def setup_and_teardown():
     for attempt in range(max_retries):
         try:
             response = requests.get(f"{BASE_URL}{CATEGORIES_ENDPOINT}", timeout=2)
+            create_relationship()
             if response.status_code == 200:
                 break
         except requests.exceptions.ConnectionError:
@@ -45,13 +46,17 @@ def setup_and_teardown():
         print("Server did not respond to shutdown request.")
 
     # Ensure the Java process is killed
-    parent = psutil.Process(process.pid)
-    for child in parent.children(recursive=True):  # Kill child processes
-        child.terminate()
-    process.terminate()
-    process.wait()
+    try:
+        parent = psutil.Process(process.pid)
+        for child in parent.children(recursive=True):  # Kill child processes
+            if child.is_running():
+                child.terminate()
+        if parent.is_running():
+            parent.terminate()
+        parent.wait()
+    except psutil.NoSuchProcess:
+        pass
 
-@pytest.fixture(scope="function", autouse=True)
 def create_relationship():
     try:
         requests.post(f"{BASE_URL}{CATEGORIES_ENDPOINT}/{VALID_ID}/{CATEG_PROJ_RELATIONSHIP}", json={"id": "1"})

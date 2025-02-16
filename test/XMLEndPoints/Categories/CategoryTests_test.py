@@ -5,10 +5,10 @@ import subprocess
 import psutil
 
 BASE_URL = "http://localhost:4567"
-TODOS_ENDPOINT = "/todos"
-JAR_PATH = "runTodoManagerRestAPI-1.5.5.jar"
+CATEGORIES_ENDPOINT = "/categories"
+JAR_PATH = "../../runTodoManagerRestAPI-1.5.5.jar"
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def setup_and_teardown():
 
     # Start the Java application in the background
@@ -47,58 +47,39 @@ def setup_and_teardown():
     process.terminate()
     process.wait()
 
-def test_create_todo_without_id():
+def test_create_category_without_id_with_title():
     body = """
-    <todo>
-        <title>Clean Cupboard</title>
-        <doneStatus>false</doneStatus>
-        <description>Home Chore to be done</description>
-    </todo>
+    <category>
+        <title>University</title>
+        <description></description>
+    </category>
     """
     headers = {"Content-Type": "application/xml"}
-    response = requests.post(f"{BASE_URL}{TODOS_ENDPOINT}", data=body, headers=headers)
+    response = requests.post(f"{BASE_URL}{CATEGORIES_ENDPOINT}", data=body, headers=headers)
     expected = {
         "id": "3",
-        "title": "Clean Cupboard",
-        "doneStatus": "false",
-        "description": "Home Chore to be done",
+        "title": "University",
+        "description": "",
     }
     assert response.status_code == 201
     assert response.json() == expected
 
-def test_create_todo_without_id_missing_title():
+def test_create_category_without_id_without_title():
     body = """
-    <todo>
-        <doneStatus>false</doneStatus>
-        <description>Give him food</description>
-    </todo>
+    <category>
+        <title></title>
+        <description>Meeting for 429 group</description>
+    </category>
     """
     headers = {"Content-Type": "application/xml"}
+    response = requests.post(f"{BASE_URL}{CATEGORIES_ENDPOINT}", data=body, headers=headers)
     expected = {
-        "errorMessages": ["title : field is mandatory"],
+        "errorMessages": ["Failed Validation: title : can not be empty"],
     }
-    response = requests.post(f"{BASE_URL}{TODOS_ENDPOINT}", data=body, headers=headers)
     assert response.status_code == 400
     assert response.json() == expected
 
-def test_create_todo_with_extra_attribute():
-    body = """
-    <todo>
-        <title>Clean Cupboard</title>
-        <doneStatus>false</doneStatus>
-        <description>Home Chore to be done</description>
-        <monthCreated>OCT</monthCreated>
-    </todo>
-    """
+def test_head_categories():
     headers = {"Content-Type": "application/xml"}
-    expected = {
-        "errorMessages": ["Could not find field: monthCreated"],
-    }
-    response = requests.post(f"{BASE_URL}{TODOS_ENDPOINT}", data=body, headers=headers)
-    assert response.status_code == 400
-    assert response.json() == expected
-
-def test_head_todos():
-    headers = {"Content-Type": "application/xml"}
-    response = requests.head(f"{BASE_URL}{TODOS_ENDPOINT}", headers=headers)
+    response = requests.head(f"{BASE_URL}{CATEGORIES_ENDPOINT}", headers=headers)
     assert response.status_code == 200
