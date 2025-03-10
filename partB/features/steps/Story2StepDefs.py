@@ -38,7 +38,7 @@ def step_impl(context, subject, project):
     response = requests.post(f"{BASE_URL}/projects/{project_id}/categories", json={"id": category_id})
     assert response.status_code == 201
 
-@then('"{project}" appears in "{subject}" category projects')
+@then('"{subject}" category appears in "{project}" project')
 def step_impl(context, project, subject):
     project_id = get_project_id_by_title(project)
     category_id = get_category_id_by_title(subject)
@@ -72,5 +72,4 @@ def step_impl(context, invalid_id):
 @then('receive category assignment error "{error_message}"')
 def step_impl(context, error_message):
     assert context.response.status_code == 404
-    print(context.response.text)
     assert error_message in context.response.text

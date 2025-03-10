@@ -30,7 +30,7 @@ def before_all(context):
 def after_all(context):
     # Gracefully shut down the server
     try:
-        requests.get(f"{BASE_URL}/shutdown")
+        response = requests.get(f"{BASE_URL}/shutdown")
     except Exception:
         print("Server did not respond to shutdown request.")
 

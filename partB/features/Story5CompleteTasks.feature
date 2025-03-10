@@ -5,26 +5,25 @@ Feature: Marking tasks as Complete
   Background: TODOs are created and related to course todo list.
     Given the server is running
     And the following TODOs exist:
-      | title                  | doneStatus | description       |
-      | Work on group project  | false      | setup the project |
-      | Finish webwork         | false      | 3 problems left   |
-      | Do Shakespeare Reading | false      | Act 1 only        |
+      | title                 | doneStatus | description        |
+      | "Complete lab report" | false      | "write the report" |
+      | "Study for midterm"   | false      | "chapters 1-3"     |
+      | "Do homework"         | false      | "chapters 3-5"     |
     And the following course todo list projects exist:
-      | title       | completed | description | active |
-      | MATH 141    | false     | Calc 2      | true   |
-      | ENGL 202    | false     | Literature  | true   |
-      | Intro to SE | false     | Coding      | true   |
+      | title      | completed | description   | active |
+      | "CHEM 102" | false     | "Chemistry"   | true   |
+      | "CS 103"   | false     | "Programming" | true   |
 
   Scenario Outline: Mark a task as complete on a course todo list (Normal Flow)
-    When a student sets the doneStatus <doneStatus> for the TODO with title <title>
+    When the student sets the doneStatus <doneStatus> for the TODO with title <title>
     Then the TODO with title <title> should have doneStatus <doneStatus>
     And the student should be notified of the successful update
 
     Examples:
-      | title                    | doneStatus | description       |
-      | "Work on group project"  | "true"     | setup the project |
-      | "Finish webwork"         | "true"     | 3 problems left   |
-      | "Do Shakespeare Reading" | "false"    | Act 1 only        |
+      | title                 | doneStatus | description      |
+      | "Complete lab report" | true       | write the report |
+      | "Study for midterm"   | true       | chapters 1-3     |
+      | "Do homework"         | true       | chapters 3-5     |
 
   Scenario Outline: Mark a task as complete after adding it to the course todo list (Alternative Flow)
     When a student adds the TODO with title <title> to the course todo list named <course>
@@ -33,16 +32,16 @@ Feature: Marking tasks as Complete
     And the student should be notified of the successful update
 
     Examples:
-      | title                    | doneStatus | description       | course        |
-      | "Finish webwork"         | "true"     | 3 problems left   | "MATH 141"    |
-      | "Do Shakespeare Reading" | "true"     | Act 1 only        | "ENGL 202"    |
-      | "Work on group project"  | "true"     | setup the project | "Intro to SE" |
+      | title                 | doneStatus | description      | course     |
+      | "Study for midterm"   | true       | chapters 1-3     | "CHEM 102" |
+      | "Do homework"         | true       | chapters 3-5     | "CHEM 102" |
+      | "Complete lab report" | true       | write the report | "CS 103"   |
 
   Scenario Outline: Attempt to mark a non-existent task as complete (Error Flow)
-    Given a TODO with id <non_existing_id> does not exist
-    When a student sets the doneStatus <doneStatus> for the TODO with id <non_existing_id>
-    Then the student should receive an error message <message>
+    Given a TODO with id <invalid_id> does not exist
+    When a student sets the doneStatus <doneStatus> for the TODO with id <invalid_id>
+    Then the student should receive an error message <message> for the invalid TODO id <invalid_id>
 
     Examples:
-      | non_existing_id | doneStatus | message                                                 |
-      | "50"            | "true"     | "No such TODO entity instance with GUID or ID 50 found" |
+      | invalid_id | doneStatus | message                            |
+      | "999"      | true       | Invalid GUID for "999" entity todo |

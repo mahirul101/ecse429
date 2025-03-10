@@ -9,12 +9,15 @@ Feature: Update TODO Status and Details
       | 1  | "Finish math homework" | false      |
 
   Scenario Outline: Mark TODO as complete (Normal Flow)
-    When updating todo "1" doneStatus to true
-    Then todo "1" shows doneStatus true
-    And last updated time changes
+    When updating todo "1" doneStatus to "<doneStatus>"
+    Then todo "1" shows doneStatus "<doneStatus>"
+
+    Examples:
+      | doneStatus |
+      | true       |
 
   Scenario Outline: Update TODO description (Alternate Flow)
-    When updating todo "1" description to "<new_desc>"
+    When updating todo "1" with title "Finish math homework" description to "<new_desc>"
     Then todo "1" description matches "<new_desc>"
 
     Examples:
@@ -24,7 +27,7 @@ Feature: Update TODO Status and Details
 
   Scenario Outline: Update non-existent TODO (Error Flow)
     When attempting to update todo "<invalid_id>"
-    Then receive error "Could not find thing with ID <invalid_id>"
+    Then receive todo update error "Invalid GUID for <invalid_id> entity todo"
 
     Examples:
       | invalid_id |

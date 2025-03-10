@@ -1,35 +1,41 @@
-Feature: Delete Completed TODOs
+Feature: Manage tasks by categories
 
-  As a productivity enthusiast, I want to clean up completed tasks, so I can focus on remaining work.
+  As a student, I want to create todos and assign it to categories, so I can easily find and manage them.
 
   Background: Server is running
     Given the server is running
-    And existing TODOs:
-      | id | title          | doneStatus |
-      | 10 | "Call dentist" | true       |
-      | 11 | "Pay bills"    | true       |
+    And categories exist:
+      | name       |
+      | "Homework" |
+      | "Project"  |
 
-  Scenario Outline: Delete completed TODO (Normal Flow)
-    When deleting todo "<id>" with doneStatus true
-    Then todo "<id>" is removed from system
-    And remaining todos exclude "<title>"
+  Scenario Outline: Assign existing category to a todo (Normal Flow)
+    Given todo "<todo_title>" exists
+    And category "<category>" exists
+    When assigning "<category>" category to "<todo_title>" todo
+    Then "<category>" category appears in "<todo_title>" todo
 
     Examples:
-      | id | title          |
-      | 10 | "Call dentist" |
-      | 11 | "Pay bills"    |
+      | todo_title         | category   |
+      | "Study Chapter 1"  | "Homework" |
+      | "Start assignment" | "Project"  |
 
-  Scenario Outline: Attempt delete active TODO (Alternate Flow)
-    Given todo "12" has doneStatus false
-    When attempting to delete todo "12"
-    Then system warns "Cannot delete incomplete tasks"
-    And todo "12" remains in system
+  Scenario Outline: Create new category and assign to todo (Alternate Flow)
+    Given todo "<todo_title>" exists
+    When creating a new category "<new_category>"
+    And assigning it to "<todo_title>" todo
+    Then "<new_category>" category appears in "<todo_title>" todo
 
-  Scenario Outline: Delete non-existent TODO (Error Flow)
-    When attempting to delete todo "<invalid_id>"
-    Then receive error "Could not find thing with ID <invalid_id>"
+    Examples:
+      | todo_title         | new_category |
+      | "Study Chapter 1"  | "Reading"    |
+      | "Start assignment" | "Coding"     |
+
+  Scenario Outline: Assign category to non-existent todo (Error Flow)
+    When attempting to assign "Homework" category to non-existent todo "<invalid_id>"
+    Then receive error "Could not find parent thing for relationship todos/<invalid_id>/categories"
 
     Examples:
       | invalid_id |
       | "9999"     |
-      | "deleted"  |
+      | "5555"     |
