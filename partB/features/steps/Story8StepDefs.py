@@ -6,14 +6,12 @@ BASE_URL = "http://localhost:4567"
 
 @given("the system is reset to its initial state")
 def step_reset_system(context):
-    # Retrieve all categories and delete them
     response = requests.get(f"{BASE_URL}/categories")
     if response.status_code == 200:
         categories = json.loads(response.text).get("categories", [])
         for category in categories:
             requests.delete(f"{BASE_URL}/categories/{category['id']}")
 
-    # Store category names to track duplicates
     context.existing_categories = set()
 
 
