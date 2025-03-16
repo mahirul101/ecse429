@@ -1,35 +1,36 @@
 Feature: Delete a Project
-  As a user, I want to delete a project by its ID so that I can remove projects that are no longer active.
+  As a user, I want to delete a project so that I can remove projects that are no longer active.
 
   Background: Server is running and initial projects are set up
     Given the server is running
     And the following projects exist:
-      | project_id | title                  | description                   | active |
-      | "701"      | "Physics Lab Report"   | "Lab report for physics"      | true   |
-      | "702"      | "Calculus Assignment"  | "Assignment for calculus"     | true   |
-      | "703"      | "Essay on Shakespeare" | "Literature essay"            | true   |
+      | title                  | description                   | active |
+      | Physics Lab Report     | Lab report for physics        | True   |
+      | Calculus Assignment    | Assignment for calculus       | True   |
+      | Essay on Shakespeare   | Literature essay              | True   |
 
   # Normal Flow: Successfully delete an existing project.
   Scenario Outline: Delete an existing project (Normal Flow)
-    When the user deletes the project with id "<project_id>"
-    Then the project with id "<project_id>" should no longer exist in the system
-    And the user receives a confirmation message "Project deleted successfully"
+    When the user deletes the project with id "<title>"
+    Then the project with id "<title>" should no longer exist in the system
 
     Examples:
-      | project_id |
-      | "701"      |
-      | "702"      |
+      | title              |
+      | Physics Lab Report |
+      | Calculus Assignment|
 
-  # Alternate Flow: Delete a project that has associated tasks or categories.
+  # Alternate Flow: Delete a project that has associated tasks and categories.
   Scenario Outline: Delete a project with associated relationships (Alternate Flow)
-    Given the project with id "<project_id>" is linked to tasks and categories
-    When the user deletes the project with id "<project_id>"
-    Then the project with id "<project_id>" and its associations should be removed from the system
-    And the user receives a confirmation message "Project and associations deleted successfully"
+    Given the project with title "<title>" has tasks associated with it
+    And the project with title "<title>" has categories associated with it
+    When the user deletes the project with id "<title>"
+    Then the project with id "<title>" should no longer exist in the system
+    And the relationships between the project and its tasks should be removed
+    And the relationships between the project and its categories should be removed
 
     Examples:
-      | project_id |
-      | "703"      |
+      | title               |
+      | Essay on Shakespeare|
 
   # Error Flow: Attempt to delete a non-existent project.
   Scenario Outline: Delete a non-existent project (Error Flow)

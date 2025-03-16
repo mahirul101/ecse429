@@ -7,6 +7,7 @@ BASE_URL = "http://localhost:4567"
 JAR_PATH = "../../runTodoManagerRestAPI-1.5.5.jar"
 
 def before_all(context):
+    print("🚀 Starting the Todo Manager API...")
     # Start the Java application in the background
     context.process = subprocess.Popen(
         ["java", "-jar", JAR_PATH],
@@ -27,7 +28,10 @@ def before_all(context):
         context.process.terminate()
         raise RuntimeError("Server failed to start.")
 
+    print("✅ Todo Manager API is ready!")
+
 def after_all(context):
+    print("🛑 Shutting down the Todo Manager API...")
     # Gracefully shut down the server
     try:
         response = requests.get(f"{BASE_URL}/shutdown")
