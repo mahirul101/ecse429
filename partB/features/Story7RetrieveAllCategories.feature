@@ -27,7 +27,7 @@ Feature: Retrieve All Categories
     And the user receives a notification "No categories found"
 
   # Error Flow: Attempt to retrieve categories from an invalid endpoint.
-  Scenario Outline: Retrieve categories from an invalid endpoint (Error Flow)
+  Scenario: Retrieve categories from an invalid endpoint (Error Flow)
     When the user attempts to retrieve categories from an invalid endpoint
     Then the user should receive a 404 status code
 

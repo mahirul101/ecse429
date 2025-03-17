@@ -78,5 +78,5 @@ def step_attempt_retrieve_invalid_endpoint(context):
     context.response = response
 
 @then('the user should receive a 404 status code')
-def step_validate_invalid_endpoint_error(context, error_message):
+def step_validate_invalid_endpoint_error(context):
     assert context.response.status_code == 404, "Expected 404 Not Found error"
