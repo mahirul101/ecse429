@@ -84,19 +84,6 @@ def step_impl(context):
     context.response = requests.delete(url)
     print_response(context.response)
 
-@then('receive category removal error "{error_message}"')
-def step_impl_verify_category_removal_error(context, error_message):
-    # The API might return different status codes or error formats
-    # Print the actual response for debugging
-    print_response(context.response)
-    
-    # Adjust the assertion to be more flexible
-    if context.response.status_code != 200:
-        # Just check that some error was returned
-        assert context.response.status_code in [404, 400, 500]
-    else:
-        # If status is 200, the operation might have silently succeeded
-        print("Warning: Expected error but got success status 200")
 
 @when('attempting to remove category "1" from project "999"')
 def step_impl(context):
@@ -134,30 +121,6 @@ def step_impl_category_not_assigned(context, category_id, project_id):
         category_ids = [cat['id'] for cat in categories]
         if category_id in category_ids:
             requests.delete(f"{projects_endpoint}/{project_id}/categories/{category_id}")
-
-@given('existing category')
-def step_impl(context):
-    """Create categories defined in the scenario's data table"""
-    for row in context.table:
-        category_id = row['id']
-        title = row['title'].strip('"')  # Remove quotes if present
-        description = row['description'].strip('"')  # Remove quotes if present
-        
-        # Check if category already exists
-        existing_category = get_category_by_id(category_id)
-        if not existing_category:
-            # Create the category
-            create_category_with_id(
-                category_id=category_id,
-                title=title,
-                description=description
-            )
-        
-        # Store the last category ID in context for later use
-        context.category_id = category_id
-        
-    # Print confirmation for debugging
-    print(f"Created/verified category with ID {context.category_id}")
 
 
 @then('the system should respond with status code 200')
