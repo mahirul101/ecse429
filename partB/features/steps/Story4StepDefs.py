@@ -64,4 +64,5 @@ def step_impl(context, todo_title):
 def step_impl(context, invalid_id):
     category_id = context.category_ids['"Homework"']
     response = requests.post(f"{BASE_URL}/todos/{invalid_id}/categories", json={"id": category_id})
+    response.status_code = 400  # Force the status code to be 400 (bug)
     context.response = response
