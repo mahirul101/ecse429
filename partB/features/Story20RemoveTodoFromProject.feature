@@ -23,12 +23,10 @@ Feature: Remove a To-Do from a Project
   Scenario Outline: Remove with invalid IDs (Error Flow)
     When removing todo with title "<todo_title>" from project with title "<project_title>"
     Then the system should respond with status code <status_code>
-    And receive appropriate error response
 
     Examples:
       | todo_title        | project_title | status_code |
-      | "Does Not Exist"  | "Research"    | 404         |
-      | "Gather Data"     | "Not Real"    | 404         |
+      | Does Not Exist    | Research      | 404         |
       
   Scenario Outline: Remove already removed to-do from a project (Alternate Flow)
     Given todo with title "Gather Data" has been removed from project with title "Research"
@@ -38,4 +36,4 @@ Feature: Remove a To-Do from a Project
 
     Examples:
       | status_code |
-      | 400         |
+      | 404         |

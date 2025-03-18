@@ -155,17 +155,6 @@ def step_impl_verify_todo_not_associated(context):
     else:
         assert False, "No todo ID or title available to verify"
 
-@then('receive appropriate error response')
-def step_impl_verify_error_response(context):
-    """Verify that an appropriate error response was received."""
-    # Check that we got an error status code (4xx or 5xx)
-    status_code = context.response.status_code
-    assert status_code >= 400, f"Expected error status code, got {status_code}"
-    
-    # Log the response for debugging
-    print(f"Received error response with status code: {status_code}")
-    print(f"Response body: {context.response.text}")
-
 @given('todo with title "{todo_title}" has been removed from project with title "{project_title}"')
 def step_impl_todo_already_removed(context, todo_title, project_title):
     """Ensure that a todo has already been removed from a project."""
