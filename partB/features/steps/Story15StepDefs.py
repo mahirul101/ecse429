@@ -16,81 +16,91 @@ def print_response(response):
 @given('existing category')
 def step_impl_existing_category(context):
     """Create or verify categories defined in the scenario's data table."""
+    context.category_ids = {}
     for row in context.table:
-        category_id = row['id']
         title = row['title'].strip('"')
         description = row['description'].strip('"') if 'description' in row else ""
         
         # Check if category exists
-        check_response = requests.get(f"{categories_endpoint}/{category_id}")
-        
+        check_response = requests.get(categories_endpoint)
         if check_response.status_code == 200:
-            print(f"Category {category_id} already exists")
-        else:
-            # Create category
-            payload = {
-                "id": category_id,
-                "title": title,
-                "description": description
-            }
-            create_response = requests.post(categories_endpoint, json=payload)
-            assert create_response.status_code == 201, f"Failed to create category: {create_response.text}"
-            print(f"Created category with ID {category_id}")
+            categories = check_response.json().get("categories", [])
+            existing_category = next((cat for cat in categories if cat['title'] == title), None)
+            if existing_category:
+                print(f"Category '{title}' already exists with ID {existing_category['id']}")
+                context.category_ids[title] = existing_category['id']
+                continue
+        
+        # Create category
+        payload = {
+            "title": title,
+            "description": description
+        }
+        create_response = requests.post(categories_endpoint, json=payload)
+        assert create_response.status_code == 201, f"Failed to create category: {create_response.text}"
+        category_id = create_response.json()['id']
+        context.category_ids[title] = category_id
+        print(f"Created category '{title}' with ID {category_id}")
 
-@given('the category "{category_id}" is assigned to todo "{todo_id}"')
-def step_impl_assign_category_to_todo(context, category_id, todo_id):
+@given('the category "{category_title}" is assigned to todo "{todo_id}"')
+def step_impl_assign_category_to_todo(context, category_title, todo_id):
     """Ensure that a category is assigned to a todo."""
+    category_id = context.category_ids[category_title]
+    
     # Check if the relationship already exists
     check_response = requests.get(f"{todos_endpoint}/{todo_id}/categories")
     if check_response.status_code == 200:
-        categories = check_response.json()["categories"]
+        categories = check_response.json().get("categories", [])
         if any(category['id'] == category_id for category in categories):
-            print(f"Category {category_id} is already assigned to todo {todo_id}")
+            print(f"Category '{category_title}' is already assigned to todo {todo_id}")
             return
     
     # Add the relationship
     payload = {"id": category_id}
     response = requests.post(f"{todos_endpoint}/{todo_id}/categories", json=payload)
     
-    # Sometimes the API needs a moment to process the relationship
+    # Retry logic in case of API delays
     max_retries = 3
     for i in range(max_retries):
         if response.status_code == 201:
             break
-        print(f"Attempt {i+1}: Failed to assign category {category_id} to todo {todo_id}. Retrying...")
+        print(f"Attempt {i+1}: Failed to assign category '{category_title}' to todo {todo_id}. Retrying...")
         time.sleep(0.5)
         response = requests.post(f"{todos_endpoint}/{todo_id}/categories", json=payload)
     
-    assert response.status_code == 201, f"Failed to assign category {category_id} to todo {todo_id}: {response.text}"
-    print(f"Assigned category {category_id} to todo {todo_id}")
+    assert response.status_code == 201, f"Failed to assign category '{category_title}' to todo {todo_id}: {response.text}"
+    print(f"Assigned category '{category_title}' to todo {todo_id}")
 
-@when('removing category "{category_id}" from todo "{todo_id}"')
-def step_impl_remove_category_from_todo(context, category_id, todo_id):
+@when('removing category "{category_title}" from todo "{todo_id}"')
+def step_impl_remove_category_from_todo(context, category_title, todo_id):
     """Remove a category from a todo."""
+    category_id = context.category_ids[category_title]
     context.response = requests.delete(f"{todos_endpoint}/{todo_id}/categories/{category_id}")
     print_response(context.response)
 
-@when('attempting to remove category "{category_id}" from todo "{todo_id}"')
-def step_impl_attempt_remove_category(context, category_id, todo_id):
+@when('attempting to remove category "{category_title}" from todo "{todo_id}"')
+def step_impl_attempt_remove_category(context, category_title, todo_id):
     """Attempt to remove a category from a todo, expecting possible failure."""
+    category_id = context.category_ids[category_title] if category_title in context.category_ids else "999"
     context.response = requests.delete(f"{todos_endpoint}/{todo_id}/categories/{category_id}")
     print_response(context.response)
 
-@then('the category "{category_id}" should not be assigned to todo "{todo_id}"')
-def step_impl_verify_category_not_assigned(context, category_id, todo_id):
+@then('the category "{category_title}" should not be assigned to todo "{todo_id}"')
+def step_impl_verify_category_not_assigned(context, category_title, todo_id):
     """Verify that a category is not assigned to a todo."""
+    category_id = context.category_ids[category_title]
     response = requests.get(f"{todos_endpoint}/{todo_id}/categories")
     
     if response.status_code != 200:
         # If todo doesn't exist anymore, that's also a valid way for the relationship not to exist
-        print(f"Todo {todo_id} does not exist, so category {category_id} is not assigned to it")
+        print(f"Todo {todo_id} does not exist, so category '{category_title}' is not assigned to it")
         return
     
-    categories = response.json()["categories"]
+    categories = response.json().get("categories", [])
     category_ids = [category['id'] for category in categories]
     
-    assert category_id not in category_ids, f"Category {category_id} is still assigned to todo {todo_id}"
-    print(f"Verified category {category_id} is not assigned to todo {todo_id}")
+    assert category_id not in category_ids, f"Category '{category_title}' is still assigned to todo {todo_id}"
+    print(f"Verified category '{category_title}' is not assigned to todo {todo_id}")
 
 @then('receive category removal error "{error_message}"')
 def step_impl_verify_category_removal_error(context, error_message):

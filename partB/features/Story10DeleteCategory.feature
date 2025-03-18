@@ -10,13 +10,13 @@ Feature: Delete a Category
 
   # Normal Flow: Successfully delete an existing category.
   Scenario Outline: Delete an existing category (Normal Flow)
-  Given a category "<name>" exists in the system
-  When the user deletes the category with name "<name>"
-  Then the category with name "<name>" should no longer exist in the system
+    Given a category "<name>" exists in the system
+    When the user deletes the category with name "<name>"
+    Then the category with name "<name>" should be removed from the system
 
-  Examples:
-    | name        |
-    | Physics     |
+    Examples:
+      | name    |
+      | Physics |
 
   # Alternate Flow: Delete a category that is linked to items.
   Scenario Outline: Delete a category with linked items (Alternate Flow)
@@ -25,8 +25,8 @@ Feature: Delete a Category
     Then the category with name <name> should be removed from the system
 
     Examples:
-      | name          |
-      | Music         |
+      | name  |
+      | Music |
 
 
   # Error Flow: Attempt to delete a non-existent category.
