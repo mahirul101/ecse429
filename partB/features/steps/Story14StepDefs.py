@@ -106,8 +106,6 @@ def step_impl_verify_todo_count_exact(context, count):
 
 @then('the retrieved todos should include todo "{todo_id}"')
 def step_impl_verify_todo_included(context, todo_id):
-    # Check if a todo with the specified ID is in the response
-    # Note: For this test, we're just checking that any todo with expected ID exists
     todo_ids = [todo['id'] for todo in context.todos]
     
     # For the first test pass, let's adjust to use the actual IDs we found
@@ -150,7 +148,6 @@ def step_impl_verify_todos_status(context, status):
     
     # Verify all todos have the expected status
     for todo in context.todos:
-        # The API might return status as string "true"/"false" or as boolean true/false
         todo_status = todo['doneStatus']
         if isinstance(todo_status, str):
             todo_status = todo_status.lower() == 'true'

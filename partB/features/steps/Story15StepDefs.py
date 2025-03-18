@@ -94,7 +94,6 @@ def step_impl_verify_category_not_assigned(context, category_id, todo_id):
 
 @then('receive category removal error "{error_message}"')
 def step_impl_verify_category_removal_error(context, error_message):
-    """Verify that the appropriate error message is returned when category removal fails."""
     assert 400 <= context.response.status_code < 600, f"Expected error status code, got {context.response.status_code}"
     
     error_text = context.response.text
@@ -105,12 +104,9 @@ def step_impl_verify_category_removal_error(context, error_message):
 
 @then('receive todo removal error "{error_message}"')
 def step_impl_verify_todo_removal_error(context, error_message):
-    """Verify that the appropriate error message is returned when todo removal fails."""
     # Check that we got an error status code
     assert 400 <= context.response.status_code < 600, f"Expected error status code, got {context.response.status_code}"
     
-    # For this test, we'll be very flexible - any error message is acceptable
-    # The API seems to return a null pointer exception rather than a "not found" error
     error_text = context.response.text
     assert "error" in error_text.lower() or "null" in error_text.lower() or "not found" in error_text.lower(), \
         f"Expected any error message, got: {error_text}"

@@ -93,11 +93,8 @@ def step_impl(context):
 
 @then('receive project removal error "{error_message}"')
 def step_impl_verify_project_removal_error(context, error_message):
-    # The API might return different status codes or error formats
-    # Print the actual response for debugging
     print_response(context.response)
     
-    # Adjust the assertion to be more flexible
     if context.response.status_code != 200:
         # Just check that some error was returned
         assert context.response.status_code in [404, 400, 500]
@@ -126,9 +123,7 @@ def step_impl_category_not_assigned(context, category_id, project_id):
 @then('the system should respond with status code 200')
 def step_impl(context):
  
-    # For the alternate flow where category is already not assigned
     if hasattr(context, 'is_alternate_flow') and context.is_alternate_flow:
-        # In this case, either 200 (success) or 404 (already not assigned) is acceptable
         assert context.response.status_code in [200, 201, 204, 404]
     else:
         # For normal flow, only success codes are acceptable
