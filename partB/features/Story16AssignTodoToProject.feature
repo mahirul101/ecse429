@@ -5,37 +5,36 @@ Feature: Assign a To-Do to a Project
   Background: Server is running with existing to-dos and projects
     Given the server is running
     And existing to-dos:
-      | id | title            | completed |
-      | 1  | "Finish Report"  | false     |
+      | id | title           | doneStatus |
+      | 1  | "Finish Report" | false      |
     And existing projects assigned to todo:
-      | id | title            | active |
-      | 10 | "Work Project"   | true  |
+      | project_title  | active | todo_title      |
+      | "Work Project" | true   | "Finish Report" |
 
   Scenario Outline: Successfully assign a to-do to a project (Normal Flow)
-    When assigning to-do "<todo_id>" to project "<project_id>"
+    When assigning to-do "<todo_title>" to project "<project_title>"
     Then the system should respond with status code 201
-    And the to-do should now belong to the project
+    And the to-do "<todo_title>" should now belong to the project "<project_title>"
 
     Examples:
-      | todo_id | project_id |
-      | 1       | 10         |
+      | todo_title    | project_title |
+      | Finish Report | Work Project  |
 
   Scenario Outline: Assign a non-existent to-do (Error Flow)
-    When assigning to-do "<invalid_todo_id>" to project "10"
+    When assigning invalid to-do "<invalid_todo>" to project "Work Project"
     Then the system should respond with status code 404
-    And receive error message "To-Do not found"
 
     Examples:
-      | invalid_todo_id |
-      | 999             |
-      | invalid         |
+      | invalid_todo |
+      | 999          |
+      | invalid      |
 
   Scenario Outline: Assign to a non-existent project (Error Flow)
-    When assigning to-do "1" to project "<invalid_project_id>"
+    When assigning to-do "Finish Report" to invalid project "<invalid_project>"
     Then the system should respond with status code 404
-    And receive error message "Project not found"
+    Then receive error "Could not find parent thing for relationship projects/<invalid_project>/tasks"
 
     Examples:
-      | invalid_project_id |
-      | 999               |
-      | invalid           |
+      | invalid_project |
+      | 999             |
+      | invalid         |

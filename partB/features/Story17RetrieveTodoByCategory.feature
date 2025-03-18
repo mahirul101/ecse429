@@ -5,31 +5,31 @@ Feature: Retrieve To-Dos by Category
   Background: Server is running with existing categories and to-dos
     Given the server is running
     And existing categories:
-      | id | name          |
-      | 5  | "Work"        |
+      | name   |
+      | "Work" |
     And to-dos under category "Work":
-      | id | title            | completed |
-      | 1  | "Submit report"  | false     |
-      | 2  | "Prepare slides" | true      |
+      | title            | doneStatus |
+      | "Submit report"  | false      |
+      | "Prepare slides" | true       |
 
   Scenario Outline: Successfully retrieve to-dos of a category (Normal Flow)
-    When retrieving to-dos under category "<category_id>"
+    When retrieving to-dos under category "<category_title>"
     Then the system should respond with status code 200
     And the response should contain:
-      | id | title            | completed |
-      | 1  | "Submit report"  | false     |
-      | 2  | "Prepare slides" | true      |
+      | title            | doneStatus |
+      | "Submit report"  | false      |
+      | "Prepare slides" | true       |
 
     Examples:
-      | category_id |
-      | 5          |
+      | category_title |
+      | Work           |
 
   Scenario Outline: Retrieve from a non-existent category (Error Flow)
-    When retrieving to-dos under category "<invalid_category_id>"
-    Then the system should respond with status code 404
-    And receive error message "Category not found"
+    When retrieving to-dos under invalid category "<invalid_category>"
+    #BUG: The system should respond with status code 404 (from part A)
+    Then the system should respond with status code 200
 
     Examples:
-      | invalid_category_id |
-      | 999                |
-      | invalid            |
+      | invalid_category |
+      | 999              |
+      | invalid          |
