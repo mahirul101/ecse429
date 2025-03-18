@@ -7,4 +7,3 @@ BASE_URL = "http://localhost:4567"
 def step_impl(context):
     response = requests.get(f"{BASE_URL}/projects")
     assert response.status_code == 200
-    
