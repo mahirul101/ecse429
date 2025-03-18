@@ -7,7 +7,7 @@ Feature: Assign a To-Do to a Project
     And existing to-dos:
       | id | title            | completed |
       | 1  | "Finish Report"  | false     |
-    And existing projects:
+    And existing projects assigned to todo:
       | id | title            | active |
       | 10 | "Work Project"   | true  |
 
