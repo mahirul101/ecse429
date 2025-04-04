@@ -38,10 +38,43 @@ def create_n_todos(n):
             todo_ids.append(response.json()['id'])
     return todo_ids
 
+# Improved measurement function for single operations
+def measure_operation(operation_func, *args):
+    # Process-specific measurements
+    process = psutil.Process(os.getpid())
+    
+    # Take baseline measurements
+    start_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
+    
+    # Measure initial CPU to establish baseline
+    process.cpu_percent()  # First call initializes monitoring but returns meaningless value
+    time.sleep(0.1)  # Short delay to let CPU monitoring stabilize
+    
+    start_time = time.time()
+    
+    # Perform the operation
+    result = operation_func(*args)
+    
+    # Take end measurements
+    end_time = time.time()
+    cpu_usage = process.cpu_percent()  # Get CPU usage since last call
+    end_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
+    
+    # Calculate metrics
+    transaction_time = (end_time - start_time) * 1000  # Convert to ms
+    memory_delta = abs(end_memory - start_memory)  # Use absolute value
+    
+    return result, {
+        "transaction_time": transaction_time,
+        "cpu_usage": cpu_usage,
+        "memory_usage": memory_delta,
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
+    }
+
 # Function to measure performance of all operations for each test size
 def measure_performance():
     # Expand this list for full testing
-    test_sizes = [1, 5, 10, 50, 200, 400, 600, 800, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+    test_sizes = [1, 5, 10, 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
     # test_sizes = [1, 5, 10, 50, 200, 400, 600, 800, 1000, 2000]
     create_results = []
     update_results = []
@@ -55,6 +88,7 @@ def measure_performance():
 
         # Clear all existing todos first
         clear_all_todos()
+        time.sleep(0.5)  # Give the server a moment to clear
 
         # Create the base set minus 1 (since we'll measure the last creation)
         if size > 1:
@@ -62,127 +96,80 @@ def measure_performance():
         else:
             base_todos = []
 
+        # Short pause to let system stabilize
+        time.sleep(0.5)
+
         # 1. Measure CREATE performance
         print(f"Measuring CREATE performance...")
-        start_cpu = psutil.cpu_percent(interval=0.1)
-        start_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
-        start_time = time.time()
-
         new_todo = generate_random_todo()
-        response = requests.post(f"{BASE_URL}/todos", json=new_todo)
-
-        end_time = time.time()
-        end_cpu = psutil.cpu_percent(interval=0.1)
-        end_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
-
-        transaction_time = (end_time - start_time) * 1000  # Convert to ms
-        cpu_usage = max(0, end_cpu - start_cpu)  # Clamp to zero
-        memory_usage = start_memory - end_memory
-
-        # Add timestamp for time series data
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
-
-        create_results.append({
-            "size": size,
-            "transaction_time": transaction_time,
-            "cpu_usage": cpu_usage,
-            "memory_usage": memory_usage,
-            "timestamp": timestamp
-        })
-
+        
+        def create_operation():
+            return requests.post(f"{BASE_URL}/todos", json=new_todo)
+        
+        response, create_metrics = measure_operation(create_operation)
+        create_metrics["size"] = size
+        create_results.append(create_metrics)
+        
         time_series_data.append({
             "operation": "Create",
             "size": size,
-            "transaction_time": transaction_time,
-            "cpu_usage": cpu_usage,
-            "memory_usage": memory_usage,
-            "timestamp": timestamp
+            **create_metrics
         })
 
-        print(f"  Create transaction time: {transaction_time:.2f} ms")
-        print(f"  Create CPU usage: {cpu_usage:.2f}%")
-        print(f"  Create memory usage: {memory_usage:.2f} MB")
+        print(f"  Create transaction time: {create_metrics['transaction_time']:.2f} ms")
+        print(f"  Create CPU usage: {create_metrics['cpu_usage']:.2f}%")
+        print(f"  Create memory usage: {create_metrics['memory_usage']:.2f} MB")
 
         # Get the ID of the newly created todo for update and delete operations
         if response.status_code == 200 or response.status_code == 201:
             test_todo_id = response.json()['id']
 
+            # Short pause between operations
+            time.sleep(0.2)
+            
             # 2. Measure UPDATE performance
             print(f"Measuring UPDATE performance...")
-            start_cpu = psutil.cpu_percent(interval=0.1)
-            start_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
-            start_time = time.time()
-
             updated_todo = generate_random_todo()
-            response = requests.put(f"{BASE_URL}/todos/{test_todo_id}", json=updated_todo)
-
-            end_time = time.time()
-            end_cpu = psutil.cpu_percent(interval=0.1)
-            end_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
-
-            transaction_time = (end_time - start_time) * 1000  # Convert to ms
-            cpu_usage = max(0, end_cpu - start_cpu)
-            memory_usage = start_memory - end_memory
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
-
-            update_results.append({
-                "size": size,
-                "transaction_time": transaction_time,
-                "cpu_usage": cpu_usage,
-                "memory_usage": memory_usage,
-                "timestamp": timestamp
-            })
-
+            
+            def update_operation():
+                return requests.put(f"{BASE_URL}/todos/{test_todo_id}", json=updated_todo)
+            
+            response, update_metrics = measure_operation(update_operation)
+            update_metrics["size"] = size
+            update_results.append(update_metrics)
+            
             time_series_data.append({
                 "operation": "Update",
                 "size": size,
-                "transaction_time": transaction_time,
-                "cpu_usage": cpu_usage,
-                "memory_usage": memory_usage,
-                "timestamp": timestamp
+                **update_metrics
             })
 
-            print(f"  Update transaction time: {transaction_time:.2f} ms")
-            print(f"  Update CPU usage: {cpu_usage:.2f}%")
-            print(f"  Update memory usage: {memory_usage:.2f} MB")
+            print(f"  Update transaction time: {update_metrics['transaction_time']:.2f} ms")
+            print(f"  Update CPU usage: {update_metrics['cpu_usage']:.2f}%")
+            print(f"  Update memory usage: {update_metrics['memory_usage']:.2f} MB")
 
+            # Short pause between operations
+            time.sleep(0.2)
+            
             # 3. Measure DELETE performance
             print(f"Measuring DELETE performance...")
-            start_cpu = psutil.cpu_percent(interval=0.1)
-            start_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
-            start_time = time.time()
-
-            response = requests.delete(f"{BASE_URL}/todos/{test_todo_id}")
-
-            end_time = time.time()
-            end_cpu = psutil.cpu_percent(interval=0.1)
-            end_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
-
-            transaction_time = (end_time - start_time) * 1000  # Convert to ms
-            cpu_usage = max(0, end_cpu - start_cpu)
-            memory_usage = start_memory - end_memory
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
-
-            delete_results.append({
-                "size": size,
-                "transaction_time": transaction_time,
-                "cpu_usage": cpu_usage,
-                "memory_usage": memory_usage,
-                "timestamp": timestamp
-            })
-
+            
+            def delete_operation():
+                return requests.delete(f"{BASE_URL}/todos/{test_todo_id}")
+            
+            response, delete_metrics = measure_operation(delete_operation)
+            delete_metrics["size"] = size
+            delete_results.append(delete_metrics)
+            
             time_series_data.append({
                 "operation": "Delete",
                 "size": size,
-                "transaction_time": transaction_time,
-                "cpu_usage": cpu_usage,
-                "memory_usage": memory_usage,
-                "timestamp": timestamp
+                **delete_metrics
             })
 
-            print(f"  Delete transaction time: {transaction_time:.2f} ms")
-            print(f"  Delete CPU usage: {cpu_usage:.2f}%")
-            print(f"  Delete memory usage: {memory_usage:.2f} MB")
+            print(f"  Delete transaction time: {delete_metrics['transaction_time']:.2f} ms")
+            print(f"  Delete CPU usage: {delete_metrics['cpu_usage']:.2f}%")
+            print(f"  Delete memory usage: {delete_metrics['memory_usage']:.2f} MB")
         else:
             print(f"Error creating test todo: {response.status_code}")
 
@@ -248,12 +235,11 @@ def plot_results(create_results, update_results, delete_results, time_series_dat
     plt.savefig('plots/todos/memory_usage_vs_objects.png')
     
     # 2. Time Series Plots
-    # Convert timestamps to datetime objects and compute sample times 
     # Calculate elapsed time in ms for each operation
-    start_time = datetime.strptime(time_series_data[0]["timestamp"], "%Y-%m-%d %H:%M:%S.%f")  # Parse the first timestamp
+    start_time = datetime.strptime(time_series_data[0]["timestamp"], "%Y-%m-%d %H:%M:%S.%f")
     for item in time_series_data:
-        current_time = datetime.strptime(item["timestamp"], "%Y-%m-%d %H:%M:%S.%f")  # Parse the current timestamp
-        item["elapsed_time"] = (current_time - start_time).total_seconds() * 1000  # Convert to milliseconds
+        current_time = datetime.strptime(item["timestamp"], "%Y-%m-%d %H:%M:%S.%f")
+        item["elapsed_time"] = (current_time - start_time).total_seconds() * 1000
     
     # Separate data by operation type
     create_data = [d for d in time_series_data if d["operation"] == "Create"]
