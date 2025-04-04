@@ -20,19 +20,19 @@ def generate_random_project():
     }
 
 # Clear all projects
-def clear_all_projects():
-    response = requests.get(f"{BASE_URL}/projects")
+def clear_all_projects(session):
+    response = session.get(f"{BASE_URL}/projects")
     print("Clearing all projects...")
     projects = response.json().get('projects', [])
     for project in projects:
-        requests.delete(f"{BASE_URL}/projects/{project['id']}")
+        session.delete(f"{BASE_URL}/projects/{project['id']}")
 
 # Create N random projects
-def create_n_projects(n):
+def create_n_projects(n,session):
     project_ids = []
     for _ in range(n):
         data = generate_random_project()
-        response = requests.post(f"{BASE_URL}/projects", json=data)
+        response = session.post(f"{BASE_URL}/projects", json=data)
         if response.status_code in [200, 201]:
             project_ids.append(response.json()['id'])
     return project_ids
@@ -71,7 +71,7 @@ def measure_operation(operation_func, *args):
     }
 
 # Measure performance for increasing number of objects
-def measure_project_performance():
+def measure_project_performance(session):
     test_sizes = [1, 5, 10, 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
     create_results = []
     update_results = []
@@ -82,12 +82,12 @@ def measure_project_performance():
         print(f"\n=== Testing with {size} pre-existing projects ===")
         
         # Clear all existing projects first
-        clear_all_projects()
+        clear_all_projects(session)
         time.sleep(0.5)  # Give the server a moment to clear
         
         # Create the base set minus 1 (since we'll measure the last creation)
         if size > 1:
-            base_projects = create_n_projects(size - 1)
+            base_projects = create_n_projects(size - 1,session)
         else:
             base_projects = []
 
@@ -99,7 +99,7 @@ def measure_project_performance():
         new_project = generate_random_project()
         
         def create_operation():
-            return requests.post(f"{BASE_URL}/projects", json=new_project)
+            return session.post(f"{BASE_URL}/projects", json=new_project)
         
         response, create_metrics = measure_operation(create_operation)
         create_metrics["size"] = size
@@ -127,7 +127,7 @@ def measure_project_performance():
             update_payload = {"description": "Updated_" + ''.join(random.choices(string.ascii_letters, k=10))}
             
             def update_operation():
-                return requests.put(f"{BASE_URL}/projects/{project_id}", json=update_payload)
+                return session.put(f"{BASE_URL}/projects/{project_id}", json=update_payload)
             
             response, update_metrics = measure_operation(update_operation)
             update_metrics["size"] = size
@@ -150,7 +150,7 @@ def measure_project_performance():
             print("Measuring DELETE performance...")
             
             def delete_operation():
-                return requests.delete(f"{BASE_URL}/projects/{project_id}")
+                return session.delete(f"{BASE_URL}/projects/{project_id}")
             
             response, delete_metrics = measure_operation(delete_operation)
             delete_metrics["size"] = size
@@ -331,7 +331,8 @@ def plot_results(create_results, update_results, delete_results, time_series_dat
 if __name__ == "__main__":
     # Run the optimized tests
     print("Starting performance measurements for projects...")
-    create_results, update_results, delete_results, time_series_data = measure_project_performance()
+    session = requests.Session()
+    create_results, update_results, delete_results, time_series_data = measure_project_performance(session)
 
     # Plot the results
     plot_results(create_results, update_results, delete_results, time_series_data)

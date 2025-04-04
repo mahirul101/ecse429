@@ -21,19 +21,44 @@ def generate_random_todo():
     }
 
 # Function to clear all todos
-def clear_all_todos():
-    response = requests.get(f"{BASE_URL}/todos")
+
+def clear_all_todos(session):
+    response = session.get(f"{BASE_URL}/todos")
     print(f"Clearing all todos...")
     todos = response.json().get('todos', [])
     for todo in todos:
-        requests.delete(f"{BASE_URL}/todos/{todo['id']}")
+        session.delete(f"{BASE_URL}/todos/{todo['id']}")
+    #print(f"Cleared {len(todos)} todos.")
+'''
+def clear_all_todos(session):
 
+    response = session.get(f"{BASE_URL}/todos")
+    print(f"Clearing all todos...")
+    todos = response.json().get('todos', [])
+    total = len(todos)
+    print(f"Found {total} todos to clear.")
+    
+    batch_size = 100
+    for i in range(0, total, batch_size):
+        batch = todos[i:i+batch_size]
+        for todo in batch:
+            try:
+                session.delete(f"{BASE_URL}/todos/{todo['id']}")
+            except Exception as e:
+                print(f"Error deleting todo {todo['id']}: {e}")
+                time.sleep(0.1)
+
+        print(f"Cleared {min(i+batch_size, total)}/{total} todos...")
+        time.sleep(0.5)
+    
+    print(f"Cleared {total} todos.")
+'''
 # Function to create a specified number of todos
-def create_n_todos(n):
+def create_n_todos(n, session):
     todo_ids = []
     for _ in range(n):
         todo_data = generate_random_todo()
-        response = requests.post(f"{BASE_URL}/todos", json=todo_data)
+        response = session.post(f"{BASE_URL}/todos", json=todo_data)
         if response.status_code == 200 or response.status_code == 201:
             todo_ids.append(response.json()['id'])
     return todo_ids
@@ -72,7 +97,7 @@ def measure_operation(operation_func, *args):
     }
 
 # Function to measure performance of all operations for each test size
-def measure_performance():
+def measure_performance(session):
     # Expand this list for full testing
     test_sizes = [1, 5, 10, 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
     # test_sizes = [1, 5, 10, 50, 200, 400, 600, 800, 1000, 2000]
@@ -87,12 +112,12 @@ def measure_performance():
         print(f"\nTesting with {size} pre-existing todos...")
 
         # Clear all existing todos first
-        clear_all_todos()
+        clear_all_todos(session)
         time.sleep(0.5)  # Give the server a moment to clear
 
         # Create the base set minus 1 (since we'll measure the last creation)
         if size > 1:
-            base_todos = create_n_todos(size - 1)
+            base_todos = create_n_todos(size - 1, session)
         else:
             base_todos = []
 
@@ -104,7 +129,7 @@ def measure_performance():
         new_todo = generate_random_todo()
         
         def create_operation():
-            return requests.post(f"{BASE_URL}/todos", json=new_todo)
+            return session.post(f"{BASE_URL}/todos", json=new_todo)
         
         response, create_metrics = measure_operation(create_operation)
         create_metrics["size"] = size
@@ -132,7 +157,7 @@ def measure_performance():
             updated_todo = generate_random_todo()
             
             def update_operation():
-                return requests.put(f"{BASE_URL}/todos/{test_todo_id}", json=updated_todo)
+                return session.put(f"{BASE_URL}/todos/{test_todo_id}", json=updated_todo)
             
             response, update_metrics = measure_operation(update_operation)
             update_metrics["size"] = size
@@ -155,7 +180,7 @@ def measure_performance():
             print(f"Measuring DELETE performance...")
             
             def delete_operation():
-                return requests.delete(f"{BASE_URL}/todos/{test_todo_id}")
+                return session.delete(f"{BASE_URL}/todos/{test_todo_id}")
             
             response, delete_metrics = measure_operation(delete_operation)
             delete_metrics["size"] = size
@@ -336,7 +361,8 @@ def plot_results(create_results, update_results, delete_results, time_series_dat
 if __name__ == "__main__":
     # Run the optimized tests
     print("Starting performance measurements...")
-    create_results, update_results, delete_results, time_series_data = measure_performance()
+    session = requests.Session()
+    create_results, update_results, delete_results, time_series_data = measure_performance(session)
 
     # Plot the results
     plot_results(create_results, update_results, delete_results, time_series_data)
