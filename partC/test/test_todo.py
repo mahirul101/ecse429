@@ -46,22 +46,22 @@ def measure_performance():
     create_results = []
     update_results = []
     delete_results = []
-    
+
     # For time series data
     time_series_data = []
-    
+
     for size in test_sizes:
         print(f"\nTesting with {size} pre-existing todos...")
-        
+
         # Clear all existing todos first
         clear_all_todos()
-        
+
         # Create the base set minus 1 (since we'll measure the last creation)
         if size > 1:
             base_todos = create_n_todos(size - 1)
         else:
             base_todos = []
-        
+
         # 1. Measure CREATE performance
         print(f"Measuring CREATE performance...")
         start_cpu = psutil.cpu_percent(interval=0.1)
@@ -78,10 +78,10 @@ def measure_performance():
         transaction_time = (end_time - start_time) * 1000  # Convert to ms
         cpu_usage = max(0, end_cpu - start_cpu)  # Clamp to zero
         memory_usage = start_memory - end_memory
-        
+
         # Add timestamp for time series data
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
-        
+
         create_results.append({
             "size": size,
             "transaction_time": transaction_time,
@@ -89,7 +89,7 @@ def measure_performance():
             "memory_usage": memory_usage,
             "timestamp": timestamp
         })
-        
+
         time_series_data.append({
             "operation": "Create",
             "size": size,
@@ -98,33 +98,33 @@ def measure_performance():
             "memory_usage": memory_usage,
             "timestamp": timestamp
         })
-        
+
         print(f"  Create transaction time: {transaction_time:.2f} ms")
         print(f"  Create CPU usage: {cpu_usage:.2f}%")
         print(f"  Create memory usage: {memory_usage:.2f} MB")
-        
+
         # Get the ID of the newly created todo for update and delete operations
         if response.status_code == 200 or response.status_code == 201:
             test_todo_id = response.json()['id']
-            
+
             # 2. Measure UPDATE performance
             print(f"Measuring UPDATE performance...")
             start_cpu = psutil.cpu_percent(interval=0.1)
             start_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
             start_time = time.time()
-            
+
             updated_todo = generate_random_todo()
             response = requests.put(f"{BASE_URL}/todos/{test_todo_id}", json=updated_todo)
-            
+
             end_time = time.time()
             end_cpu = psutil.cpu_percent(interval=0.1)
             end_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
-            
+
             transaction_time = (end_time - start_time) * 1000  # Convert to ms
             cpu_usage = max(0, end_cpu - start_cpu)
             memory_usage = start_memory - end_memory
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
-            
+
             update_results.append({
                 "size": size,
                 "transaction_time": transaction_time,
@@ -132,7 +132,7 @@ def measure_performance():
                 "memory_usage": memory_usage,
                 "timestamp": timestamp
             })
-            
+
             time_series_data.append({
                 "operation": "Update",
                 "size": size,
@@ -141,28 +141,28 @@ def measure_performance():
                 "memory_usage": memory_usage,
                 "timestamp": timestamp
             })
-            
+
             print(f"  Update transaction time: {transaction_time:.2f} ms")
             print(f"  Update CPU usage: {cpu_usage:.2f}%")
             print(f"  Update memory usage: {memory_usage:.2f} MB")
-            
+
             # 3. Measure DELETE performance
             print(f"Measuring DELETE performance...")
             start_cpu = psutil.cpu_percent(interval=0.1)
             start_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
             start_time = time.time()
-            
+
             response = requests.delete(f"{BASE_URL}/todos/{test_todo_id}")
-            
+
             end_time = time.time()
             end_cpu = psutil.cpu_percent(interval=0.1)
             end_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
-            
+
             transaction_time = (end_time - start_time) * 1000  # Convert to ms
             cpu_usage = max(0, end_cpu - start_cpu)
             memory_usage = start_memory - end_memory
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
-            
+
             delete_results.append({
                 "size": size,
                 "transaction_time": transaction_time,
@@ -170,7 +170,7 @@ def measure_performance():
                 "memory_usage": memory_usage,
                 "timestamp": timestamp
             })
-            
+
             time_series_data.append({
                 "operation": "Delete",
                 "size": size,
@@ -179,13 +179,13 @@ def measure_performance():
                 "memory_usage": memory_usage,
                 "timestamp": timestamp
             })
-            
+
             print(f"  Delete transaction time: {transaction_time:.2f} ms")
             print(f"  Delete CPU usage: {cpu_usage:.2f}%")
             print(f"  Delete memory usage: {memory_usage:.2f} MB")
         else:
             print(f"Error creating test todo: {response.status_code}")
-    
+
     return create_results, update_results, delete_results, time_series_data
 
 # Function to plot the results
@@ -314,18 +314,18 @@ def plot_results(create_results, update_results, delete_results, time_series_dat
     plt.figure(figsize=(12, 6))
 
     if create_data:
-        plt.plot([d["elapsed_time"] for d in create_data], 
-                [d["memory_usage"] for d in create_data], 
+        plt.plot([d["elapsed_time"] for d in create_data],
+                [d["memory_usage"] for d in create_data],
                 'o-', label='Create', color='blue')
 
     if update_data:
-        plt.plot([d["elapsed_time"] for d in update_data], 
-                [d["memory_usage"] for d in update_data], 
+        plt.plot([d["elapsed_time"] for d in update_data],
+                [d["memory_usage"] for d in update_data],
                 's-', label='Update', color='green')
 
     if delete_data:
-        plt.plot([d["elapsed_time"] for d in delete_data], 
-                [d["memory_usage"] for d in delete_data], 
+        plt.plot([d["elapsed_time"] for d in delete_data],
+                [d["memory_usage"] for d in delete_data],
                 '^-', label='Delete', color='red')
 
     plt.xlabel('Elapsed Time (ms)')
@@ -334,7 +334,7 @@ def plot_results(create_results, update_results, delete_results, time_series_dat
     plt.legend()
     plt.grid(True)
     plt.savefig('plots/todos/memory_usage_vs_elapsed_time.png')
-    
+
     # Save results to file
     all_results = {
         "create": create_results,
@@ -342,17 +342,17 @@ def plot_results(create_results, update_results, delete_results, time_series_dat
         "delete": delete_results,
         "time_series": time_series_data
     }
-    
+
     os.makedirs("results", exist_ok=True)
     with open("results/todos_results.json", "w") as f:
-        json.dump(all_results, f, indent=2, default=str) 
+        json.dump(all_results, f, indent=2, default=str)
 
 if __name__ == "__main__":
     # Run the optimized tests
     print("Starting performance measurements...")
     create_results, update_results, delete_results, time_series_data = measure_performance()
-    
+
     # Plot the results
     plot_results(create_results, update_results, delete_results, time_series_data)
-    
+
     print("\nTesting completed. Results saved to plots/todos/ directory.")
