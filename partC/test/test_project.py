@@ -42,12 +42,8 @@ def measure_operation(operation_func, *args):
     # Process-specific measurements
     process = psutil.Process(os.getpid())
     
-    # Take baseline measurements
-    start_memory = process.memory_info().rss / (1024 * 1024)  # MB
-    
     # Measure initial CPU to establish baseline
     process.cpu_percent()  # First call initializes monitoring but returns meaningless value
-    time.sleep(0.1)  # Short delay to let CPU monitoring stabilize
     
     start_time = time.time()
     
@@ -57,16 +53,15 @@ def measure_operation(operation_func, *args):
     # Take end measurements
     end_time = time.time()
     cpu_usage = process.cpu_percent()  # Get CPU usage since last call
-    end_memory = process.memory_info().rss / (1024 * 1024)  # MB
+    end_memory = psutil.virtual_memory().available / (1024 * 1024)  # MB
     
     # Calculate metrics
     transaction_time = (end_time - start_time) * 1000  # Convert to ms
-    memory_delta = abs(end_memory - start_memory)  # Use absolute value
     
     return result, {
         "transaction_time": transaction_time,
         "cpu_usage": cpu_usage,
-        "memory_usage": memory_delta,
+        "available_memory": end_memory,
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
     }
 
@@ -83,16 +78,12 @@ def measure_project_performance(session):
         
         # Clear all existing projects first
         clear_all_projects(session)
-        time.sleep(0.5)  # Give the server a moment to clear
         
         # Create the base set minus 1 (since we'll measure the last creation)
         if size > 1:
             base_projects = create_n_projects(size - 1,session)
         else:
             base_projects = []
-
-        # Short pause to let system stabilize
-        time.sleep(0.5)
 
         # 1. Measure CREATE performance
         print("Measuring CREATE performance...")
@@ -113,14 +104,11 @@ def measure_project_performance(session):
 
         print(f"  Create transaction time: {create_metrics['transaction_time']:.2f} ms")
         print(f"  Create CPU usage: {create_metrics['cpu_usage']:.2f}%")
-        print(f"  Create memory usage: {create_metrics['memory_usage']:.2f} MB")
+        print(f"  Create available memory: {create_metrics['available_memory']:.2f} MB")
 
         # Get the ID of the newly created project for update and delete operations
         if response.status_code in [200, 201]:
             project_id = response.json()['id']
-
-            # Short pause between operations
-            time.sleep(0.2)
             
             # 2. Measure UPDATE performance
             print("Measuring UPDATE performance...")
@@ -141,10 +129,7 @@ def measure_project_performance(session):
 
             print(f"  Update transaction time: {update_metrics['transaction_time']:.2f} ms")
             print(f"  Update CPU usage: {update_metrics['cpu_usage']:.2f}%")
-            print(f"  Update memory usage: {update_metrics['memory_usage']:.2f} MB")
-
-            # Short pause between operations
-            time.sleep(0.2)
+            print(f"  Update available memory: {update_metrics['available_memory']:.2f} MB")
             
             # 3. Measure DELETE performance
             print("Measuring DELETE performance...")
@@ -164,7 +149,7 @@ def measure_project_performance(session):
 
             print(f"  Delete transaction time: {delete_metrics['transaction_time']:.2f} ms")
             print(f"  Delete CPU usage: {delete_metrics['cpu_usage']:.2f}%")
-            print(f"  Delete memory usage: {delete_metrics['memory_usage']:.2f} MB")
+            print(f"  Delete available memory: {delete_metrics['available_memory']:.2f} MB")
         else:
             print(f"Error creating test project: {response.status_code}")
 
@@ -186,9 +171,9 @@ def plot_results(create_results, update_results, delete_results, time_series_dat
     update_cpu = [r["cpu_usage"] for r in update_results]
     delete_cpu = [r["cpu_usage"] for r in delete_results]
     
-    create_memory = [r["memory_usage"] for r in create_results]
-    update_memory = [r["memory_usage"] for r in update_results]
-    delete_memory = [r["memory_usage"] for r in delete_results]
+    create_memory = [r["available_memory"] for r in create_results]
+    update_memory = [r["available_memory"] for r in update_results]
+    delete_memory = [r["available_memory"] for r in delete_results]
     
     # Plot transaction time vs. number of objects
     plt.figure(figsize=(12, 6))
@@ -216,18 +201,18 @@ def plot_results(create_results, update_results, delete_results, time_series_dat
     plt.grid(True)
     plt.savefig('plots/projects/cpu_usage_vs_objects.png')
     
-    # Plot memory usage vs. number of objects
+    # Plot available memory vs. number of objects
     plt.figure(figsize=(12, 6))
     plt.plot(sizes, create_memory, 'o-', label='Create')
     plt.plot(sizes, update_memory, 's-', label='Update')
     plt.plot(sizes, delete_memory, '^-', label='Delete')
     plt.xscale('log')
     plt.xlabel('Number of Projects')
-    plt.ylabel('Memory Usage (MB)')
-    plt.title('Memory Usage vs. Number of Projects')
+    plt.ylabel('Free Available Memory (MB)')
+    plt.title('Free Available Memory vs. Number of Projects')
     plt.legend()
     plt.grid(True)
-    plt.savefig('plots/projects/memory_usage_vs_objects.png')
+    plt.savefig('plots/projects/available_memory_vs_objects.png')
     
     # 2. Time Series Plots
     # Calculate elapsed time in ms for each operation
@@ -291,30 +276,30 @@ def plot_results(create_results, update_results, delete_results, time_series_dat
     plt.grid(True)
     plt.savefig('plots/projects/cpu_usage_vs_elapsed_time.png')
 
-    # Memory Usage vs Elapsed Time
+    # available memory vs Elapsed Time
     plt.figure(figsize=(12, 6))
 
     if create_data:
         plt.plot([d["elapsed_time"] for d in create_data],
-                [d["memory_usage"] for d in create_data],
+                [d["available_memory"] for d in create_data],
                 'o-', label='Create', color='blue')
 
     if update_data:
         plt.plot([d["elapsed_time"] for d in update_data],
-                [d["memory_usage"] for d in update_data],
+                [d["available_memory"] for d in update_data],
                 's-', label='Update', color='green')
 
     if delete_data:
         plt.plot([d["elapsed_time"] for d in delete_data],
-                [d["memory_usage"] for d in delete_data],
+                [d["available_memory"] for d in delete_data],
                 '^-', label='Delete', color='red')
 
     plt.xlabel('Elapsed Time (ms)')
-    plt.ylabel('Memory Usage (MB)')
-    plt.title('Memory Usage vs Elapsed Time')
+    plt.ylabel('Free Available Memory (MB)')
+    plt.title('Free Available Memory vs Elapsed Time')
     plt.legend()
     plt.grid(True)
-    plt.savefig('plots/projects/memory_usage_vs_elapsed_time.png')
+    plt.savefig('plots/projects/available_memory_vs_elapsed_time.png')
 
     # Save results to file
     all_results = {
