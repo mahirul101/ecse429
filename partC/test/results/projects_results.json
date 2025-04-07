@@ -1,1162 +1,874 @@
 {
   "create": [
     {
-      "transaction_time": 2.4220943450927734,
-      "cpu_usage": 73.1,
-      "available_memory": 2531.47265625,
-      "timestamp": "2025-04-06 18:42:50.157333",
+      "transaction_time": 1.9919872283935547,
+      "cpu_usage": 78.3,
+      "available_memory": 3424.40234375,
+      "timestamp": "2025-04-06 23:08:47.515713",
       "size": 1
     },
     {
-      "transaction_time": 1.9099712371826172,
-      "cpu_usage": 80.6,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.181661",
-      "size": 5
-    },
-    {
-      "transaction_time": 2.8717517852783203,
-      "cpu_usage": 77.8,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.227826",
+      "transaction_time": 2.6798248291015625,
+      "cpu_usage": 71.9,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.564433",
       "size": 10
     },
     {
-      "transaction_time": 2.2509098052978516,
-      "cpu_usage": 80.8,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.374293",
+      "transaction_time": 1.9421577453613281,
+      "cpu_usage": 80.0,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.691531",
       "size": 50
     },
     {
-      "transaction_time": 2.830982208251953,
-      "cpu_usage": 64.9,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.655730",
-      "size": 75
-    },
-    {
-      "transaction_time": 2.421140670776367,
-      "cpu_usage": 80.4,
-      "available_memory": 2518.80859375,
-      "timestamp": "2025-04-06 18:42:51.241928",
+      "transaction_time": 1.931905746459961,
+      "cpu_usage": 81.0,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:48.001108",
       "size": 100
     },
     {
-      "transaction_time": 2.3250579833984375,
-      "cpu_usage": 80.4,
-      "available_memory": 2521.0078125,
-      "timestamp": "2025-04-06 18:42:52.001071",
+      "transaction_time": 1.901865005493164,
+      "cpu_usage": 79.8,
+      "available_memory": 3421.85546875,
+      "timestamp": "2025-04-06 23:08:48.627719",
       "size": 200
     },
     {
-      "transaction_time": 2.321004867553711,
-      "cpu_usage": 79.6,
-      "available_memory": 2523.2734375,
-      "timestamp": "2025-04-06 18:42:53.197144",
+      "transaction_time": 2.5289058685302734,
+      "cpu_usage": 83.6,
+      "available_memory": 3422.38671875,
+      "timestamp": "2025-04-06 23:08:49.590949",
       "size": 300
     },
     {
-      "transaction_time": 2.2509098052978516,
-      "cpu_usage": 79.1,
-      "available_memory": 2523.9375,
-      "timestamp": "2025-04-06 18:42:54.873545",
+      "transaction_time": 1.9073486328125,
+      "cpu_usage": 80.8,
+      "available_memory": 3424.41796875,
+      "timestamp": "2025-04-06 23:08:50.953156",
       "size": 400
     },
     {
-      "transaction_time": 3.988027572631836,
-      "cpu_usage": 65.0,
-      "available_memory": 2517.90625,
-      "timestamp": "2025-04-06 18:42:56.928802",
+      "transaction_time": 1.9359588623046875,
+      "cpu_usage": 81.2,
+      "available_memory": 3423.6171875,
+      "timestamp": "2025-04-06 23:08:52.700649",
       "size": 500
     },
     {
-      "transaction_time": 1.9793510437011719,
-      "cpu_usage": 80.7,
-      "available_memory": 2530.609375,
-      "timestamp": "2025-04-06 18:42:59.327128",
+      "transaction_time": 2.2656917572021484,
+      "cpu_usage": 76.9,
+      "available_memory": 3407.27734375,
+      "timestamp": "2025-04-06 23:08:54.927410",
       "size": 600
     },
     {
-      "transaction_time": 1.9352436065673828,
-      "cpu_usage": 78.9,
-      "available_memory": 2544.76953125,
-      "timestamp": "2025-04-06 18:43:02.245133",
+      "transaction_time": 1.9860267639160156,
+      "cpu_usage": 79.1,
+      "available_memory": 3385.2421875,
+      "timestamp": "2025-04-06 23:08:57.535807",
       "size": 700
     },
     {
-      "transaction_time": 1.8970966339111328,
-      "cpu_usage": 81.1,
-      "available_memory": 2543.6640625,
-      "timestamp": "2025-04-06 18:43:05.823209",
+      "transaction_time": 2.3369789123535156,
+      "cpu_usage": 80.8,
+      "available_memory": 3379.5546875,
+      "timestamp": "2025-04-06 23:09:00.467598",
       "size": 800
     },
     {
-      "transaction_time": 1.9152164459228516,
-      "cpu_usage": 80.8,
-      "available_memory": 2590.0546875,
-      "timestamp": "2025-04-06 18:43:09.538926",
+      "transaction_time": 1.8808841705322266,
+      "cpu_usage": 80.3,
+      "available_memory": 3379.5078125,
+      "timestamp": "2025-04-06 23:09:03.768207",
       "size": 900
     },
     {
-      "transaction_time": 3.022909164428711,
-      "cpu_usage": 71.4,
-      "available_memory": 2564.3671875,
-      "timestamp": "2025-04-06 18:43:13.759715",
+      "transaction_time": 1.911163330078125,
+      "cpu_usage": 81.4,
+      "available_memory": 3379.9140625,
+      "timestamp": "2025-04-06 23:09:07.451717",
       "size": 1000
     },
     {
-      "transaction_time": 2.501964569091797,
-      "cpu_usage": 78.4,
-      "available_memory": 2607.3359375,
-      "timestamp": "2025-04-06 18:43:20.373526",
+      "transaction_time": 1.893758773803711,
+      "cpu_usage": 81.5,
+      "available_memory": 3422.2265625,
+      "timestamp": "2025-04-06 23:09:13.308716",
       "size": 2000
     },
     {
-      "transaction_time": 2.0859241485595703,
-      "cpu_usage": 80.3,
-      "available_memory": 2607.296875,
-      "timestamp": "2025-04-06 18:43:31.309684",
+      "transaction_time": 1.9440650939941406,
+      "cpu_usage": 82.3,
+      "available_memory": 3408.0078125,
+      "timestamp": "2025-04-06 23:09:23.184167",
       "size": 3000
     },
     {
-      "transaction_time": 1.949310302734375,
-      "cpu_usage": 79.4,
-      "available_memory": 2645.4375,
-      "timestamp": "2025-04-06 18:43:46.702096",
+      "transaction_time": 1.9750595092773438,
+      "cpu_usage": 79.9,
+      "available_memory": 3396.05859375,
+      "timestamp": "2025-04-06 23:09:36.882102",
       "size": 4000
     },
     {
-      "transaction_time": 2.4521350860595703,
-      "cpu_usage": 78.8,
-      "available_memory": 2651.8515625,
-      "timestamp": "2025-04-06 18:44:06.381017",
+      "transaction_time": 1.9230842590332031,
+      "cpu_usage": 79.6,
+      "available_memory": 3405.15625,
+      "timestamp": "2025-04-06 23:09:54.548027",
       "size": 5000
     },
     {
-      "transaction_time": 1.9199848175048828,
-      "cpu_usage": 80.5,
-      "available_memory": 2576.3359375,
-      "timestamp": "2025-04-06 18:44:31.263677",
-      "size": 6000
-    },
-    {
-      "transaction_time": 2.504110336303711,
-      "cpu_usage": 80.6,
-      "available_memory": 2602.0234375,
-      "timestamp": "2025-04-06 18:45:00.341614",
-      "size": 7000
-    },
-    {
-      "transaction_time": 2.763032913208008,
-      "cpu_usage": 80.5,
-      "available_memory": 2603.40234375,
-      "timestamp": "2025-04-06 18:45:36.013219",
-      "size": 8000
-    },
-    {
-      "transaction_time": 1.9068717956542969,
-      "cpu_usage": 82.7,
-      "available_memory": 2623.46484375,
-      "timestamp": "2025-04-06 18:46:15.322547",
-      "size": 9000
-    },
-    {
-      "transaction_time": 2.1169185638427734,
+      "transaction_time": 1.9578933715820312,
       "cpu_usage": 80.4,
-      "available_memory": 2619.6796875,
-      "timestamp": "2025-04-06 18:46:58.888484",
-      "size": 10000
+      "available_memory": 3395.52734375,
+      "timestamp": "2025-04-06 23:10:16.670048",
+      "size": 6000
     }
   ],
   "update": [
     {
-      "transaction_time": 2.1681785583496094,
-      "cpu_usage": 73.7,
-      "available_memory": 2531.58203125,
-      "timestamp": "2025-04-06 18:42:50.159892",
+      "transaction_time": 3.3888816833496094,
+      "cpu_usage": 64.7,
+      "available_memory": 3424.51171875,
+      "timestamp": "2025-04-06 23:08:47.519471",
       "size": 1
     },
     {
-      "transaction_time": 2.104043960571289,
-      "cpu_usage": 77.0,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.184030",
-      "size": 5
-    },
-    {
-      "transaction_time": 5.352973937988281,
-      "cpu_usage": 45.6,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.233476",
+      "transaction_time": 2.0248889923095703,
+      "cpu_usage": 76.3,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.566745",
       "size": 10
     },
     {
-      "transaction_time": 3.038167953491211,
-      "cpu_usage": 66.9,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.377640",
+      "transaction_time": 2.1581649780273438,
+      "cpu_usage": 75.2,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.693952",
       "size": 50
     },
     {
-      "transaction_time": 6.344079971313477,
-      "cpu_usage": 40.5,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.662515",
-      "size": 75
-    },
-    {
-      "transaction_time": 8.26716423034668,
-      "cpu_usage": 25.6,
-      "available_memory": 2519.38671875,
-      "timestamp": "2025-04-06 18:42:51.250573",
+      "transaction_time": 2.0956993103027344,
+      "cpu_usage": 74.0,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:48.003473",
       "size": 100
     },
     {
-      "transaction_time": 2.048015594482422,
-      "cpu_usage": 75.0,
-      "available_memory": 2521.1171875,
-      "timestamp": "2025-04-06 18:42:52.003389",
+      "transaction_time": 2.042055130004883,
+      "cpu_usage": 75.5,
+      "available_memory": 3421.96484375,
+      "timestamp": "2025-04-06 23:08:48.630029",
       "size": 200
     },
     {
-      "transaction_time": 3.777027130126953,
-      "cpu_usage": 57.1,
-      "available_memory": 2522.90625,
-      "timestamp": "2025-04-06 18:42:53.201281",
+      "transaction_time": 4.996061325073242,
+      "cpu_usage": 44.6,
+      "available_memory": 3422.53515625,
+      "timestamp": "2025-04-06 23:08:49.596229",
       "size": 300
     },
     {
-      "transaction_time": 2.3779869079589844,
-      "cpu_usage": 70.2,
-      "available_memory": 2523.546875,
-      "timestamp": "2025-04-06 18:42:54.876207",
+      "transaction_time": 2.1622180938720703,
+      "cpu_usage": 73.5,
+      "available_memory": 3424.484375,
+      "timestamp": "2025-04-06 23:08:50.955586",
       "size": 400
     },
     {
-      "transaction_time": 6.613969802856445,
-      "cpu_usage": 33.0,
-      "available_memory": 2518.0390625,
-      "timestamp": "2025-04-06 18:42:56.935758",
+      "transaction_time": 2.035856246948242,
+      "cpu_usage": 75.8,
+      "available_memory": 3423.2265625,
+      "timestamp": "2025-04-06 23:08:52.702953",
       "size": 500
     },
     {
-      "transaction_time": 2.9709339141845703,
-      "cpu_usage": 65.7,
-      "available_memory": 2530.71875,
-      "timestamp": "2025-04-06 18:42:59.330379",
+      "transaction_time": 2.3641586303710938,
+      "cpu_usage": 72.4,
+      "available_memory": 3406.88671875,
+      "timestamp": "2025-04-06 23:08:54.930121",
       "size": 600
     },
     {
-      "transaction_time": 2.2726058959960938,
-      "cpu_usage": 68.6,
-      "available_memory": 2544.87890625,
-      "timestamp": "2025-04-06 18:43:02.247674",
+      "transaction_time": 2.1789073944091797,
+      "cpu_usage": 69.2,
+      "available_memory": 3385.3515625,
+      "timestamp": "2025-04-06 23:08:57.538257",
       "size": 700
     },
     {
-      "transaction_time": 2.1271705627441406,
-      "cpu_usage": 72.7,
-      "available_memory": 2543.7734375,
-      "timestamp": "2025-04-06 18:43:05.825603",
+      "transaction_time": 2.9151439666748047,
+      "cpu_usage": 63.0,
+      "available_memory": 3379.6875,
+      "timestamp": "2025-04-06 23:09:00.470884",
       "size": 800
     },
     {
-      "transaction_time": 2.2199153900146484,
-      "cpu_usage": 69.5,
-      "available_memory": 2590.1640625,
-      "timestamp": "2025-04-06 18:43:09.541410",
+      "transaction_time": 2.1431446075439453,
+      "cpu_usage": 72.7,
+      "available_memory": 3379.6171875,
+      "timestamp": "2025-04-06 23:09:03.770620",
       "size": 900
     },
     {
-      "transaction_time": 6.065130233764648,
-      "cpu_usage": 34.5,
-      "available_memory": 2562.625,
-      "timestamp": "2025-04-06 18:43:13.766202",
+      "transaction_time": 2.0322799682617188,
+      "cpu_usage": 76.1,
+      "available_memory": 3380.0234375,
+      "timestamp": "2025-04-06 23:09:07.454018",
       "size": 1000
     },
     {
-      "transaction_time": 3.9637088775634766,
-      "cpu_usage": 47.4,
-      "available_memory": 2607.46875,
-      "timestamp": "2025-04-06 18:43:20.377893",
+      "transaction_time": 2.404928207397461,
+      "cpu_usage": 68.8,
+      "available_memory": 3422.3359375,
+      "timestamp": "2025-04-06 23:09:13.311386",
       "size": 2000
     },
     {
-      "transaction_time": 3.470182418823242,
-      "cpu_usage": 53.8,
-      "available_memory": 2607.4296875,
-      "timestamp": "2025-04-06 18:43:31.313628",
+      "transaction_time": 2.2630691528320312,
+      "cpu_usage": 67.5,
+      "available_memory": 3408.1171875,
+      "timestamp": "2025-04-06 23:09:23.186700",
       "size": 3000
     },
     {
-      "transaction_time": 2.9497146606445312,
-      "cpu_usage": 56.8,
-      "available_memory": 2645.046875,
-      "timestamp": "2025-04-06 18:43:46.705406",
+      "transaction_time": 2.227783203125,
+      "cpu_usage": 73.7,
+      "available_memory": 3396.16796875,
+      "timestamp": "2025-04-06 23:09:36.884611",
       "size": 4000
     },
     {
-      "transaction_time": 7.063865661621094,
-      "cpu_usage": 33.3,
-      "available_memory": 2652.0,
-      "timestamp": "2025-04-06 18:44:06.388370",
+      "transaction_time": 2.947092056274414,
+      "cpu_usage": 55.5,
+      "available_memory": 3405.265625,
+      "timestamp": "2025-04-06 23:09:54.551242",
       "size": 5000
     },
     {
-      "transaction_time": 2.168893814086914,
-      "cpu_usage": 74.2,
-      "available_memory": 2576.4609375,
-      "timestamp": "2025-04-06 18:44:31.266189",
+      "transaction_time": 2.749919891357422,
+      "cpu_usage": 57.2,
+      "available_memory": 3395.63671875,
+      "timestamp": "2025-04-06 23:10:16.673070",
       "size": 6000
-    },
-    {
-      "transaction_time": 8.323907852172852,
-      "cpu_usage": 25.0,
-      "available_memory": 2605.34375,
-      "timestamp": "2025-04-06 18:45:00.350282",
-      "size": 7000
-    },
-    {
-      "transaction_time": 6.523847579956055,
-      "cpu_usage": 36.4,
-      "available_memory": 2601.9140625,
-      "timestamp": "2025-04-06 18:45:36.020169",
-      "size": 8000
-    },
-    {
-      "transaction_time": 3.1130313873291016,
-      "cpu_usage": 56.5,
-      "available_memory": 2623.59765625,
-      "timestamp": "2025-04-06 18:46:15.325998",
-      "size": 9000
-    },
-    {
-      "transaction_time": 8.7127685546875,
-      "cpu_usage": 20.6,
-      "available_memory": 2615.859375,
-      "timestamp": "2025-04-06 18:46:58.897539",
-      "size": 10000
     }
   ],
   "delete": [
     {
-      "transaction_time": 4.889249801635742,
-      "cpu_usage": 44.3,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.165466",
+      "transaction_time": 3.720998764038086,
+      "cpu_usage": 56.5,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.523601",
       "size": 1
     },
     {
-      "transaction_time": 2.579927444458008,
-      "cpu_usage": 73.1,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.186833",
-      "size": 5
-    },
-    {
-      "transaction_time": 2.212047576904297,
-      "cpu_usage": 79.2,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.235966",
+      "transaction_time": 3.1256675720214844,
+      "cpu_usage": 72.1,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.570212",
       "size": 10
     },
     {
-      "transaction_time": 2.171039581298828,
-      "cpu_usage": 79.7,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.380140",
+      "transaction_time": 4.143953323364258,
+      "cpu_usage": 50.9,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.698325",
       "size": 50
     },
     {
-      "transaction_time": 2.7441978454589844,
-      "cpu_usage": 72.8,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.665697",
-      "size": 75
-    },
-    {
-      "transaction_time": 2.721071243286133,
-      "cpu_usage": 74.5,
-      "available_memory": 2519.84375,
-      "timestamp": "2025-04-06 18:42:51.253584",
+      "transaction_time": 3.1709671020507812,
+      "cpu_usage": 57.4,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:48.006908",
       "size": 100
     },
     {
-      "transaction_time": 4.755258560180664,
-      "cpu_usage": 48.9,
-      "available_memory": 2522.29296875,
-      "timestamp": "2025-04-06 18:42:52.008370",
+      "transaction_time": 4.102945327758789,
+      "cpu_usage": 56.4,
+      "available_memory": 3422.109375,
+      "timestamp": "2025-04-06 23:08:48.634361",
       "size": 200
     },
     {
-      "transaction_time": 2.434968948364258,
-      "cpu_usage": 81.9,
-      "available_memory": 2523.015625,
-      "timestamp": "2025-04-06 18:42:53.204135",
+      "transaction_time": 2.0101070404052734,
+      "cpu_usage": 76.8,
+      "available_memory": 3422.64453125,
+      "timestamp": "2025-04-06 23:08:49.598477",
       "size": 300
     },
     {
-      "transaction_time": 4.10771369934082,
-      "cpu_usage": 56.2,
-      "available_memory": 2523.546875,
-      "timestamp": "2025-04-06 18:42:54.880795",
+      "transaction_time": 8.05521011352539,
+      "cpu_usage": 23.4,
+      "available_memory": 3423.640625,
+      "timestamp": "2025-04-06 23:08:50.963881",
       "size": 400
     },
     {
-      "transaction_time": 2.8731822967529297,
-      "cpu_usage": 68.2,
-      "available_memory": 2518.1953125,
-      "timestamp": "2025-04-06 18:42:56.939041",
+      "transaction_time": 3.7200450897216797,
+      "cpu_usage": 61.1,
+      "available_memory": 3423.37109375,
+      "timestamp": "2025-04-06 23:08:52.706898",
       "size": 500
     },
     {
-      "transaction_time": 5.435943603515625,
-      "cpu_usage": 44.6,
-      "available_memory": 2530.81640625,
-      "timestamp": "2025-04-06 18:42:59.336087",
+      "transaction_time": 4.079103469848633,
+      "cpu_usage": 56.2,
+      "available_memory": 3407.03125,
+      "timestamp": "2025-04-06 23:08:54.934448",
       "size": 600
     },
     {
-      "transaction_time": 2.7801990509033203,
-      "cpu_usage": 65.2,
-      "available_memory": 2544.87890625,
-      "timestamp": "2025-04-06 18:43:02.250679",
+      "transaction_time": 4.863977432250977,
+      "cpu_usage": 45.4,
+      "available_memory": 3385.69140625,
+      "timestamp": "2025-04-06 23:08:57.543349",
       "size": 700
     },
     {
-      "transaction_time": 4.400968551635742,
-      "cpu_usage": 48.5,
-      "available_memory": 2543.87890625,
-      "timestamp": "2025-04-06 18:43:05.830232",
+      "transaction_time": 3.406047821044922,
+      "cpu_usage": 56.5,
+      "available_memory": 3379.80859375,
+      "timestamp": "2025-04-06 23:09:00.474788",
       "size": 800
     },
     {
-      "transaction_time": 4.605770111083984,
-      "cpu_usage": 48.5,
-      "available_memory": 2590.14453125,
-      "timestamp": "2025-04-06 18:43:09.546259",
+      "transaction_time": 4.374027252197266,
+      "cpu_usage": 51.0,
+      "available_memory": 3379.76171875,
+      "timestamp": "2025-04-06 23:09:03.775224",
       "size": 900
     },
     {
-      "transaction_time": 3.9250850677490234,
-      "cpu_usage": 53.5,
-      "available_memory": 2562.78125,
-      "timestamp": "2025-04-06 18:43:13.770792",
+      "transaction_time": 3.560304641723633,
+      "cpu_usage": 51.1,
+      "available_memory": 3380.16796875,
+      "timestamp": "2025-04-06 23:09:07.457938",
       "size": 1000
     },
     {
-      "transaction_time": 3.248929977416992,
-      "cpu_usage": 57.0,
-      "available_memory": 2607.578125,
-      "timestamp": "2025-04-06 18:43:20.381608",
+      "transaction_time": 5.442142486572266,
+      "cpu_usage": 42.1,
+      "available_memory": 3422.55859375,
+      "timestamp": "2025-04-06 23:09:13.317065",
       "size": 2000
     },
     {
-      "transaction_time": 5.612850189208984,
-      "cpu_usage": 43.8,
-      "available_memory": 2603.0390625,
-      "timestamp": "2025-04-06 18:43:31.319696",
+      "transaction_time": 4.120826721191406,
+      "cpu_usage": 41.6,
+      "available_memory": 3408.26171875,
+      "timestamp": "2025-04-06 23:09:23.191080",
       "size": 3000
     },
     {
-      "transaction_time": 9.452104568481445,
-      "cpu_usage": 26.0,
-      "available_memory": 2641.26953125,
-      "timestamp": "2025-04-06 18:43:46.715117",
+      "transaction_time": 4.395961761474609,
+      "cpu_usage": 49.4,
+      "available_memory": 3396.3125,
+      "timestamp": "2025-04-06 23:09:36.889239",
       "size": 4000
     },
     {
-      "transaction_time": 3.7839412689208984,
-      "cpu_usage": 52.7,
-      "available_memory": 2648.71875,
-      "timestamp": "2025-04-06 18:44:06.392425",
+      "transaction_time": 5.571842193603516,
+      "cpu_usage": 38.1,
+      "available_memory": 3405.41015625,
+      "timestamp": "2025-04-06 23:09:54.557045",
       "size": 5000
     },
     {
-      "transaction_time": 4.951953887939453,
-      "cpu_usage": 43.8,
-      "available_memory": 2574.734375,
-      "timestamp": "2025-04-06 18:44:31.271367",
+      "transaction_time": 4.914045333862305,
+      "cpu_usage": 43.6,
+      "available_memory": 3395.26953125,
+      "timestamp": "2025-04-06 23:10:16.678226",
       "size": 6000
-    },
-    {
-      "transaction_time": 5.811214447021484,
-      "cpu_usage": 37.1,
-      "available_memory": 2605.5078125,
-      "timestamp": "2025-04-06 18:45:00.356464",
-      "size": 7000
-    },
-    {
-      "transaction_time": 16.960859298706055,
-      "cpu_usage": 14.5,
-      "available_memory": 2578.01171875,
-      "timestamp": "2025-04-06 18:45:36.037644",
-      "size": 8000
-    },
-    {
-      "transaction_time": 6.305932998657227,
-      "cpu_usage": 36.9,
-      "available_memory": 2622.125,
-      "timestamp": "2025-04-06 18:46:15.332962",
-      "size": 9000
-    },
-    {
-      "transaction_time": 6.148815155029297,
-      "cpu_usage": 32.3,
-      "available_memory": 2615.015625,
-      "timestamp": "2025-04-06 18:46:58.903976",
-      "size": 10000
     }
   ],
   "time_series": [
     {
       "operation": "Create",
       "size": 1,
-      "transaction_time": 2.4220943450927734,
-      "cpu_usage": 73.1,
-      "available_memory": 2531.47265625,
-      "timestamp": "2025-04-06 18:42:50.157333",
+      "transaction_time": 1.9919872283935547,
+      "cpu_usage": 78.3,
+      "available_memory": 3424.40234375,
+      "timestamp": "2025-04-06 23:08:47.515713",
       "elapsed_time": 0.0
     },
     {
       "operation": "Update",
       "size": 1,
-      "transaction_time": 2.1681785583496094,
-      "cpu_usage": 73.7,
-      "available_memory": 2531.58203125,
-      "timestamp": "2025-04-06 18:42:50.159892",
-      "elapsed_time": 2.559
+      "transaction_time": 3.3888816833496094,
+      "cpu_usage": 64.7,
+      "available_memory": 3424.51171875,
+      "timestamp": "2025-04-06 23:08:47.519471",
+      "elapsed_time": 3.758
     },
     {
       "operation": "Delete",
       "size": 1,
-      "transaction_time": 4.889249801635742,
-      "cpu_usage": 44.3,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.165466",
-      "elapsed_time": 8.133
-    },
-    {
-      "operation": "Create",
-      "size": 5,
-      "transaction_time": 1.9099712371826172,
-      "cpu_usage": 80.6,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.181661",
-      "elapsed_time": 24.328
-    },
-    {
-      "operation": "Update",
-      "size": 5,
-      "transaction_time": 2.104043960571289,
-      "cpu_usage": 77.0,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.184030",
-      "elapsed_time": 26.697
-    },
-    {
-      "operation": "Delete",
-      "size": 5,
-      "transaction_time": 2.579927444458008,
-      "cpu_usage": 73.1,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.186833",
-      "elapsed_time": 29.5
-    },
-    {
-      "operation": "Create",
-      "size": 10,
-      "transaction_time": 2.8717517852783203,
-      "cpu_usage": 77.8,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.227826",
-      "elapsed_time": 70.493
-    },
-    {
-      "operation": "Update",
-      "size": 10,
-      "transaction_time": 5.352973937988281,
-      "cpu_usage": 45.6,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.233476",
-      "elapsed_time": 76.143
-    },
-    {
-      "operation": "Delete",
-      "size": 10,
-      "transaction_time": 2.212047576904297,
-      "cpu_usage": 79.2,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.235966",
-      "elapsed_time": 78.633
-    },
-    {
-      "operation": "Create",
-      "size": 50,
-      "transaction_time": 2.2509098052978516,
-      "cpu_usage": 80.8,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.374293",
-      "elapsed_time": 216.95999999999998
-    },
-    {
-      "operation": "Update",
-      "size": 50,
-      "transaction_time": 3.038167953491211,
-      "cpu_usage": 66.9,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.377640",
-      "elapsed_time": 220.30700000000002
-    },
-    {
-      "operation": "Delete",
-      "size": 50,
-      "transaction_time": 2.171039581298828,
-      "cpu_usage": 79.7,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.380140",
-      "elapsed_time": 222.80700000000002
-    },
-    {
-      "operation": "Create",
-      "size": 75,
-      "transaction_time": 2.830982208251953,
-      "cpu_usage": 64.9,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.655730",
-      "elapsed_time": 498.397
-    },
-    {
-      "operation": "Update",
-      "size": 75,
-      "transaction_time": 6.344079971313477,
-      "cpu_usage": 40.5,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.662515",
-      "elapsed_time": 505.182
-    },
-    {
-      "operation": "Delete",
-      "size": 75,
-      "transaction_time": 2.7441978454589844,
-      "cpu_usage": 72.8,
-      "available_memory": 2530.18359375,
-      "timestamp": "2025-04-06 18:42:50.665697",
-      "elapsed_time": 508.36400000000003
-    },
-    {
-      "operation": "Create",
-      "size": 100,
-      "transaction_time": 2.421140670776367,
-      "cpu_usage": 80.4,
-      "available_memory": 2518.80859375,
-      "timestamp": "2025-04-06 18:42:51.241928",
-      "elapsed_time": 1084.595
-    },
-    {
-      "operation": "Update",
-      "size": 100,
-      "transaction_time": 8.26716423034668,
-      "cpu_usage": 25.6,
-      "available_memory": 2519.38671875,
-      "timestamp": "2025-04-06 18:42:51.250573",
-      "elapsed_time": 1093.24
-    },
-    {
-      "operation": "Delete",
-      "size": 100,
-      "transaction_time": 2.721071243286133,
-      "cpu_usage": 74.5,
-      "available_memory": 2519.84375,
-      "timestamp": "2025-04-06 18:42:51.253584",
-      "elapsed_time": 1096.251
-    },
-    {
-      "operation": "Create",
-      "size": 200,
-      "transaction_time": 2.3250579833984375,
-      "cpu_usage": 80.4,
-      "available_memory": 2521.0078125,
-      "timestamp": "2025-04-06 18:42:52.001071",
-      "elapsed_time": 1843.738
-    },
-    {
-      "operation": "Update",
-      "size": 200,
-      "transaction_time": 2.048015594482422,
-      "cpu_usage": 75.0,
-      "available_memory": 2521.1171875,
-      "timestamp": "2025-04-06 18:42:52.003389",
-      "elapsed_time": 1846.0559999999998
-    },
-    {
-      "operation": "Delete",
-      "size": 200,
-      "transaction_time": 4.755258560180664,
-      "cpu_usage": 48.9,
-      "available_memory": 2522.29296875,
-      "timestamp": "2025-04-06 18:42:52.008370",
-      "elapsed_time": 1851.037
-    },
-    {
-      "operation": "Create",
-      "size": 300,
-      "transaction_time": 2.321004867553711,
-      "cpu_usage": 79.6,
-      "available_memory": 2523.2734375,
-      "timestamp": "2025-04-06 18:42:53.197144",
-      "elapsed_time": 3039.8109999999997
-    },
-    {
-      "operation": "Update",
-      "size": 300,
-      "transaction_time": 3.777027130126953,
-      "cpu_usage": 57.1,
-      "available_memory": 2522.90625,
-      "timestamp": "2025-04-06 18:42:53.201281",
-      "elapsed_time": 3043.948
-    },
-    {
-      "operation": "Delete",
-      "size": 300,
-      "transaction_time": 2.434968948364258,
-      "cpu_usage": 81.9,
-      "available_memory": 2523.015625,
-      "timestamp": "2025-04-06 18:42:53.204135",
-      "elapsed_time": 3046.802
-    },
-    {
-      "operation": "Create",
-      "size": 400,
-      "transaction_time": 2.2509098052978516,
-      "cpu_usage": 79.1,
-      "available_memory": 2523.9375,
-      "timestamp": "2025-04-06 18:42:54.873545",
-      "elapsed_time": 4716.2119999999995
-    },
-    {
-      "operation": "Update",
-      "size": 400,
-      "transaction_time": 2.3779869079589844,
-      "cpu_usage": 70.2,
-      "available_memory": 2523.546875,
-      "timestamp": "2025-04-06 18:42:54.876207",
-      "elapsed_time": 4718.874
-    },
-    {
-      "operation": "Delete",
-      "size": 400,
-      "transaction_time": 4.10771369934082,
-      "cpu_usage": 56.2,
-      "available_memory": 2523.546875,
-      "timestamp": "2025-04-06 18:42:54.880795",
-      "elapsed_time": 4723.4619999999995
-    },
-    {
-      "operation": "Create",
-      "size": 500,
-      "transaction_time": 3.988027572631836,
-      "cpu_usage": 65.0,
-      "available_memory": 2517.90625,
-      "timestamp": "2025-04-06 18:42:56.928802",
-      "elapsed_time": 6771.469
-    },
-    {
-      "operation": "Update",
-      "size": 500,
-      "transaction_time": 6.613969802856445,
-      "cpu_usage": 33.0,
-      "available_memory": 2518.0390625,
-      "timestamp": "2025-04-06 18:42:56.935758",
-      "elapsed_time": 6778.425
-    },
-    {
-      "operation": "Delete",
-      "size": 500,
-      "transaction_time": 2.8731822967529297,
-      "cpu_usage": 68.2,
-      "available_memory": 2518.1953125,
-      "timestamp": "2025-04-06 18:42:56.939041",
-      "elapsed_time": 6781.708
-    },
-    {
-      "operation": "Create",
-      "size": 600,
-      "transaction_time": 1.9793510437011719,
-      "cpu_usage": 80.7,
-      "available_memory": 2530.609375,
-      "timestamp": "2025-04-06 18:42:59.327128",
-      "elapsed_time": 9169.795
-    },
-    {
-      "operation": "Update",
-      "size": 600,
-      "transaction_time": 2.9709339141845703,
-      "cpu_usage": 65.7,
-      "available_memory": 2530.71875,
-      "timestamp": "2025-04-06 18:42:59.330379",
-      "elapsed_time": 9173.045999999998
-    },
-    {
-      "operation": "Delete",
-      "size": 600,
-      "transaction_time": 5.435943603515625,
-      "cpu_usage": 44.6,
-      "available_memory": 2530.81640625,
-      "timestamp": "2025-04-06 18:42:59.336087",
-      "elapsed_time": 9178.753999999999
-    },
-    {
-      "operation": "Create",
-      "size": 700,
-      "transaction_time": 1.9352436065673828,
-      "cpu_usage": 78.9,
-      "available_memory": 2544.76953125,
-      "timestamp": "2025-04-06 18:43:02.245133",
-      "elapsed_time": 12087.8
-    },
-    {
-      "operation": "Update",
-      "size": 700,
-      "transaction_time": 2.2726058959960938,
-      "cpu_usage": 68.6,
-      "available_memory": 2544.87890625,
-      "timestamp": "2025-04-06 18:43:02.247674",
-      "elapsed_time": 12090.341
-    },
-    {
-      "operation": "Delete",
-      "size": 700,
-      "transaction_time": 2.7801990509033203,
-      "cpu_usage": 65.2,
-      "available_memory": 2544.87890625,
-      "timestamp": "2025-04-06 18:43:02.250679",
-      "elapsed_time": 12093.346
-    },
-    {
-      "operation": "Create",
-      "size": 800,
-      "transaction_time": 1.8970966339111328,
-      "cpu_usage": 81.1,
-      "available_memory": 2543.6640625,
-      "timestamp": "2025-04-06 18:43:05.823209",
-      "elapsed_time": 15665.876
-    },
-    {
-      "operation": "Update",
-      "size": 800,
-      "transaction_time": 2.1271705627441406,
-      "cpu_usage": 72.7,
-      "available_memory": 2543.7734375,
-      "timestamp": "2025-04-06 18:43:05.825603",
-      "elapsed_time": 15668.27
-    },
-    {
-      "operation": "Delete",
-      "size": 800,
-      "transaction_time": 4.400968551635742,
-      "cpu_usage": 48.5,
-      "available_memory": 2543.87890625,
-      "timestamp": "2025-04-06 18:43:05.830232",
-      "elapsed_time": 15672.899
-    },
-    {
-      "operation": "Create",
-      "size": 900,
-      "transaction_time": 1.9152164459228516,
-      "cpu_usage": 80.8,
-      "available_memory": 2590.0546875,
-      "timestamp": "2025-04-06 18:43:09.538926",
-      "elapsed_time": 19381.592999999997
-    },
-    {
-      "operation": "Update",
-      "size": 900,
-      "transaction_time": 2.2199153900146484,
-      "cpu_usage": 69.5,
-      "available_memory": 2590.1640625,
-      "timestamp": "2025-04-06 18:43:09.541410",
-      "elapsed_time": 19384.077
-    },
-    {
-      "operation": "Delete",
-      "size": 900,
-      "transaction_time": 4.605770111083984,
-      "cpu_usage": 48.5,
-      "available_memory": 2590.14453125,
-      "timestamp": "2025-04-06 18:43:09.546259",
-      "elapsed_time": 19388.926000000003
-    },
-    {
-      "operation": "Create",
-      "size": 1000,
-      "transaction_time": 3.022909164428711,
-      "cpu_usage": 71.4,
-      "available_memory": 2564.3671875,
-      "timestamp": "2025-04-06 18:43:13.759715",
-      "elapsed_time": 23602.381999999998
-    },
-    {
-      "operation": "Update",
-      "size": 1000,
-      "transaction_time": 6.065130233764648,
-      "cpu_usage": 34.5,
-      "available_memory": 2562.625,
-      "timestamp": "2025-04-06 18:43:13.766202",
-      "elapsed_time": 23608.869
-    },
-    {
-      "operation": "Delete",
-      "size": 1000,
-      "transaction_time": 3.9250850677490234,
-      "cpu_usage": 53.5,
-      "available_memory": 2562.78125,
-      "timestamp": "2025-04-06 18:43:13.770792",
-      "elapsed_time": 23613.459
-    },
-    {
-      "operation": "Create",
-      "size": 2000,
-      "transaction_time": 2.501964569091797,
-      "cpu_usage": 78.4,
-      "available_memory": 2607.3359375,
-      "timestamp": "2025-04-06 18:43:20.373526",
-      "elapsed_time": 30216.193
-    },
-    {
-      "operation": "Update",
-      "size": 2000,
-      "transaction_time": 3.9637088775634766,
-      "cpu_usage": 47.4,
-      "available_memory": 2607.46875,
-      "timestamp": "2025-04-06 18:43:20.377893",
-      "elapsed_time": 30220.559999999998
-    },
-    {
-      "operation": "Delete",
-      "size": 2000,
-      "transaction_time": 3.248929977416992,
-      "cpu_usage": 57.0,
-      "available_memory": 2607.578125,
-      "timestamp": "2025-04-06 18:43:20.381608",
-      "elapsed_time": 30224.274999999998
-    },
-    {
-      "operation": "Create",
-      "size": 3000,
-      "transaction_time": 2.0859241485595703,
-      "cpu_usage": 80.3,
-      "available_memory": 2607.296875,
-      "timestamp": "2025-04-06 18:43:31.309684",
-      "elapsed_time": 41152.351
-    },
-    {
-      "operation": "Update",
-      "size": 3000,
-      "transaction_time": 3.470182418823242,
-      "cpu_usage": 53.8,
-      "available_memory": 2607.4296875,
-      "timestamp": "2025-04-06 18:43:31.313628",
-      "elapsed_time": 41156.295
-    },
-    {
-      "operation": "Delete",
-      "size": 3000,
-      "transaction_time": 5.612850189208984,
-      "cpu_usage": 43.8,
-      "available_memory": 2603.0390625,
-      "timestamp": "2025-04-06 18:43:31.319696",
-      "elapsed_time": 41162.363
-    },
-    {
-      "operation": "Create",
-      "size": 4000,
-      "transaction_time": 1.949310302734375,
-      "cpu_usage": 79.4,
-      "available_memory": 2645.4375,
-      "timestamp": "2025-04-06 18:43:46.702096",
-      "elapsed_time": 56544.763000000006
-    },
-    {
-      "operation": "Update",
-      "size": 4000,
-      "transaction_time": 2.9497146606445312,
-      "cpu_usage": 56.8,
-      "available_memory": 2645.046875,
-      "timestamp": "2025-04-06 18:43:46.705406",
-      "elapsed_time": 56548.073000000004
-    },
-    {
-      "operation": "Delete",
-      "size": 4000,
-      "transaction_time": 9.452104568481445,
-      "cpu_usage": 26.0,
-      "available_memory": 2641.26953125,
-      "timestamp": "2025-04-06 18:43:46.715117",
-      "elapsed_time": 56557.784
-    },
-    {
-      "operation": "Create",
-      "size": 5000,
-      "transaction_time": 2.4521350860595703,
-      "cpu_usage": 78.8,
-      "available_memory": 2651.8515625,
-      "timestamp": "2025-04-06 18:44:06.381017",
-      "elapsed_time": 76223.68400000001
-    },
-    {
-      "operation": "Update",
-      "size": 5000,
-      "transaction_time": 7.063865661621094,
-      "cpu_usage": 33.3,
-      "available_memory": 2652.0,
-      "timestamp": "2025-04-06 18:44:06.388370",
-      "elapsed_time": 76231.037
-    },
-    {
-      "operation": "Delete",
-      "size": 5000,
-      "transaction_time": 3.7839412689208984,
-      "cpu_usage": 52.7,
-      "available_memory": 2648.71875,
-      "timestamp": "2025-04-06 18:44:06.392425",
-      "elapsed_time": 76235.09199999999
-    },
-    {
-      "operation": "Create",
-      "size": 6000,
-      "transaction_time": 1.9199848175048828,
-      "cpu_usage": 80.5,
-      "available_memory": 2576.3359375,
-      "timestamp": "2025-04-06 18:44:31.263677",
-      "elapsed_time": 101106.34400000001
-    },
-    {
-      "operation": "Update",
-      "size": 6000,
-      "transaction_time": 2.168893814086914,
-      "cpu_usage": 74.2,
-      "available_memory": 2576.4609375,
-      "timestamp": "2025-04-06 18:44:31.266189",
-      "elapsed_time": 101108.856
-    },
-    {
-      "operation": "Delete",
-      "size": 6000,
-      "transaction_time": 4.951953887939453,
-      "cpu_usage": 43.8,
-      "available_memory": 2574.734375,
-      "timestamp": "2025-04-06 18:44:31.271367",
-      "elapsed_time": 101114.034
-    },
-    {
-      "operation": "Create",
-      "size": 7000,
-      "transaction_time": 2.504110336303711,
-      "cpu_usage": 80.6,
-      "available_memory": 2602.0234375,
-      "timestamp": "2025-04-06 18:45:00.341614",
-      "elapsed_time": 130184.281
-    },
-    {
-      "operation": "Update",
-      "size": 7000,
-      "transaction_time": 8.323907852172852,
-      "cpu_usage": 25.0,
-      "available_memory": 2605.34375,
-      "timestamp": "2025-04-06 18:45:00.350282",
-      "elapsed_time": 130192.949
-    },
-    {
-      "operation": "Delete",
-      "size": 7000,
-      "transaction_time": 5.811214447021484,
-      "cpu_usage": 37.1,
-      "available_memory": 2605.5078125,
-      "timestamp": "2025-04-06 18:45:00.356464",
-      "elapsed_time": 130199.131
-    },
-    {
-      "operation": "Create",
-      "size": 8000,
-      "transaction_time": 2.763032913208008,
-      "cpu_usage": 80.5,
-      "available_memory": 2603.40234375,
-      "timestamp": "2025-04-06 18:45:36.013219",
-      "elapsed_time": 165855.886
-    },
-    {
-      "operation": "Update",
-      "size": 8000,
-      "transaction_time": 6.523847579956055,
-      "cpu_usage": 36.4,
-      "available_memory": 2601.9140625,
-      "timestamp": "2025-04-06 18:45:36.020169",
-      "elapsed_time": 165862.83599999998
-    },
-    {
-      "operation": "Delete",
-      "size": 8000,
-      "transaction_time": 16.960859298706055,
-      "cpu_usage": 14.5,
-      "available_memory": 2578.01171875,
-      "timestamp": "2025-04-06 18:45:36.037644",
-      "elapsed_time": 165880.31100000002
-    },
-    {
-      "operation": "Create",
-      "size": 9000,
-      "transaction_time": 1.9068717956542969,
-      "cpu_usage": 82.7,
-      "available_memory": 2623.46484375,
-      "timestamp": "2025-04-06 18:46:15.322547",
-      "elapsed_time": 205165.21399999998
-    },
-    {
-      "operation": "Update",
-      "size": 9000,
-      "transaction_time": 3.1130313873291016,
+      "transaction_time": 3.720998764038086,
       "cpu_usage": 56.5,
-      "available_memory": 2623.59765625,
-      "timestamp": "2025-04-06 18:46:15.325998",
-      "elapsed_time": 205168.665
-    },
-    {
-      "operation": "Delete",
-      "size": 9000,
-      "transaction_time": 6.305932998657227,
-      "cpu_usage": 36.9,
-      "available_memory": 2622.125,
-      "timestamp": "2025-04-06 18:46:15.332962",
-      "elapsed_time": 205175.629
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.523601",
+      "elapsed_time": 7.887999999999999
     },
     {
       "operation": "Create",
-      "size": 10000,
-      "transaction_time": 2.1169185638427734,
-      "cpu_usage": 80.4,
-      "available_memory": 2619.6796875,
-      "timestamp": "2025-04-06 18:46:58.888484",
-      "elapsed_time": 248731.151
+      "size": 10,
+      "transaction_time": 2.6798248291015625,
+      "cpu_usage": 71.9,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.564433",
+      "elapsed_time": 48.72
     },
     {
       "operation": "Update",
-      "size": 10000,
-      "transaction_time": 8.7127685546875,
-      "cpu_usage": 20.6,
-      "available_memory": 2615.859375,
-      "timestamp": "2025-04-06 18:46:58.897539",
-      "elapsed_time": 248740.206
+      "size": 10,
+      "transaction_time": 2.0248889923095703,
+      "cpu_usage": 76.3,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.566745",
+      "elapsed_time": 51.032000000000004
     },
     {
       "operation": "Delete",
-      "size": 10000,
-      "transaction_time": 6.148815155029297,
-      "cpu_usage": 32.3,
-      "available_memory": 2615.015625,
-      "timestamp": "2025-04-06 18:46:58.903976",
-      "elapsed_time": 248746.643
+      "size": 10,
+      "transaction_time": 3.1256675720214844,
+      "cpu_usage": 72.1,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.570212",
+      "elapsed_time": 54.499
+    },
+    {
+      "operation": "Create",
+      "size": 50,
+      "transaction_time": 1.9421577453613281,
+      "cpu_usage": 80.0,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.691531",
+      "elapsed_time": 175.818
+    },
+    {
+      "operation": "Update",
+      "size": 50,
+      "transaction_time": 2.1581649780273438,
+      "cpu_usage": 75.2,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.693952",
+      "elapsed_time": 178.239
+    },
+    {
+      "operation": "Delete",
+      "size": 50,
+      "transaction_time": 4.143953323364258,
+      "cpu_usage": 50.9,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:47.698325",
+      "elapsed_time": 182.612
+    },
+    {
+      "operation": "Create",
+      "size": 100,
+      "transaction_time": 1.931905746459961,
+      "cpu_usage": 81.0,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:48.001108",
+      "elapsed_time": 485.39500000000004
+    },
+    {
+      "operation": "Update",
+      "size": 100,
+      "transaction_time": 2.0956993103027344,
+      "cpu_usage": 74.0,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:48.003473",
+      "elapsed_time": 487.76000000000005
+    },
+    {
+      "operation": "Delete",
+      "size": 100,
+      "transaction_time": 3.1709671020507812,
+      "cpu_usage": 57.4,
+      "available_memory": 3424.26171875,
+      "timestamp": "2025-04-06 23:08:48.006908",
+      "elapsed_time": 491.195
+    },
+    {
+      "operation": "Create",
+      "size": 200,
+      "transaction_time": 1.901865005493164,
+      "cpu_usage": 79.8,
+      "available_memory": 3421.85546875,
+      "timestamp": "2025-04-06 23:08:48.627719",
+      "elapsed_time": 1112.006
+    },
+    {
+      "operation": "Update",
+      "size": 200,
+      "transaction_time": 2.042055130004883,
+      "cpu_usage": 75.5,
+      "available_memory": 3421.96484375,
+      "timestamp": "2025-04-06 23:08:48.630029",
+      "elapsed_time": 1114.316
+    },
+    {
+      "operation": "Delete",
+      "size": 200,
+      "transaction_time": 4.102945327758789,
+      "cpu_usage": 56.4,
+      "available_memory": 3422.109375,
+      "timestamp": "2025-04-06 23:08:48.634361",
+      "elapsed_time": 1118.6480000000001
+    },
+    {
+      "operation": "Create",
+      "size": 300,
+      "transaction_time": 2.5289058685302734,
+      "cpu_usage": 83.6,
+      "available_memory": 3422.38671875,
+      "timestamp": "2025-04-06 23:08:49.590949",
+      "elapsed_time": 2075.236
+    },
+    {
+      "operation": "Update",
+      "size": 300,
+      "transaction_time": 4.996061325073242,
+      "cpu_usage": 44.6,
+      "available_memory": 3422.53515625,
+      "timestamp": "2025-04-06 23:08:49.596229",
+      "elapsed_time": 2080.5159999999996
+    },
+    {
+      "operation": "Delete",
+      "size": 300,
+      "transaction_time": 2.0101070404052734,
+      "cpu_usage": 76.8,
+      "available_memory": 3422.64453125,
+      "timestamp": "2025-04-06 23:08:49.598477",
+      "elapsed_time": 2082.764
+    },
+    {
+      "operation": "Create",
+      "size": 400,
+      "transaction_time": 1.9073486328125,
+      "cpu_usage": 80.8,
+      "available_memory": 3424.41796875,
+      "timestamp": "2025-04-06 23:08:50.953156",
+      "elapsed_time": 3437.443
+    },
+    {
+      "operation": "Update",
+      "size": 400,
+      "transaction_time": 2.1622180938720703,
+      "cpu_usage": 73.5,
+      "available_memory": 3424.484375,
+      "timestamp": "2025-04-06 23:08:50.955586",
+      "elapsed_time": 3439.873
+    },
+    {
+      "operation": "Delete",
+      "size": 400,
+      "transaction_time": 8.05521011352539,
+      "cpu_usage": 23.4,
+      "available_memory": 3423.640625,
+      "timestamp": "2025-04-06 23:08:50.963881",
+      "elapsed_time": 3448.168
+    },
+    {
+      "operation": "Create",
+      "size": 500,
+      "transaction_time": 1.9359588623046875,
+      "cpu_usage": 81.2,
+      "available_memory": 3423.6171875,
+      "timestamp": "2025-04-06 23:08:52.700649",
+      "elapsed_time": 5184.936000000001
+    },
+    {
+      "operation": "Update",
+      "size": 500,
+      "transaction_time": 2.035856246948242,
+      "cpu_usage": 75.8,
+      "available_memory": 3423.2265625,
+      "timestamp": "2025-04-06 23:08:52.702953",
+      "elapsed_time": 5187.24
+    },
+    {
+      "operation": "Delete",
+      "size": 500,
+      "transaction_time": 3.7200450897216797,
+      "cpu_usage": 61.1,
+      "available_memory": 3423.37109375,
+      "timestamp": "2025-04-06 23:08:52.706898",
+      "elapsed_time": 5191.1849999999995
+    },
+    {
+      "operation": "Create",
+      "size": 600,
+      "transaction_time": 2.2656917572021484,
+      "cpu_usage": 76.9,
+      "available_memory": 3407.27734375,
+      "timestamp": "2025-04-06 23:08:54.927410",
+      "elapsed_time": 7411.697
+    },
+    {
+      "operation": "Update",
+      "size": 600,
+      "transaction_time": 2.3641586303710938,
+      "cpu_usage": 72.4,
+      "available_memory": 3406.88671875,
+      "timestamp": "2025-04-06 23:08:54.930121",
+      "elapsed_time": 7414.407999999999
+    },
+    {
+      "operation": "Delete",
+      "size": 600,
+      "transaction_time": 4.079103469848633,
+      "cpu_usage": 56.2,
+      "available_memory": 3407.03125,
+      "timestamp": "2025-04-06 23:08:54.934448",
+      "elapsed_time": 7418.735
+    },
+    {
+      "operation": "Create",
+      "size": 700,
+      "transaction_time": 1.9860267639160156,
+      "cpu_usage": 79.1,
+      "available_memory": 3385.2421875,
+      "timestamp": "2025-04-06 23:08:57.535807",
+      "elapsed_time": 10020.094000000001
+    },
+    {
+      "operation": "Update",
+      "size": 700,
+      "transaction_time": 2.1789073944091797,
+      "cpu_usage": 69.2,
+      "available_memory": 3385.3515625,
+      "timestamp": "2025-04-06 23:08:57.538257",
+      "elapsed_time": 10022.544
+    },
+    {
+      "operation": "Delete",
+      "size": 700,
+      "transaction_time": 4.863977432250977,
+      "cpu_usage": 45.4,
+      "available_memory": 3385.69140625,
+      "timestamp": "2025-04-06 23:08:57.543349",
+      "elapsed_time": 10027.635999999999
+    },
+    {
+      "operation": "Create",
+      "size": 800,
+      "transaction_time": 2.3369789123535156,
+      "cpu_usage": 80.8,
+      "available_memory": 3379.5546875,
+      "timestamp": "2025-04-06 23:09:00.467598",
+      "elapsed_time": 12951.885
+    },
+    {
+      "operation": "Update",
+      "size": 800,
+      "transaction_time": 2.9151439666748047,
+      "cpu_usage": 63.0,
+      "available_memory": 3379.6875,
+      "timestamp": "2025-04-06 23:09:00.470884",
+      "elapsed_time": 12955.171
+    },
+    {
+      "operation": "Delete",
+      "size": 800,
+      "transaction_time": 3.406047821044922,
+      "cpu_usage": 56.5,
+      "available_memory": 3379.80859375,
+      "timestamp": "2025-04-06 23:09:00.474788",
+      "elapsed_time": 12959.075
+    },
+    {
+      "operation": "Create",
+      "size": 900,
+      "transaction_time": 1.8808841705322266,
+      "cpu_usage": 80.3,
+      "available_memory": 3379.5078125,
+      "timestamp": "2025-04-06 23:09:03.768207",
+      "elapsed_time": 16252.493999999999
+    },
+    {
+      "operation": "Update",
+      "size": 900,
+      "transaction_time": 2.1431446075439453,
+      "cpu_usage": 72.7,
+      "available_memory": 3379.6171875,
+      "timestamp": "2025-04-06 23:09:03.770620",
+      "elapsed_time": 16254.907
+    },
+    {
+      "operation": "Delete",
+      "size": 900,
+      "transaction_time": 4.374027252197266,
+      "cpu_usage": 51.0,
+      "available_memory": 3379.76171875,
+      "timestamp": "2025-04-06 23:09:03.775224",
+      "elapsed_time": 16259.511
+    },
+    {
+      "operation": "Create",
+      "size": 1000,
+      "transaction_time": 1.911163330078125,
+      "cpu_usage": 81.4,
+      "available_memory": 3379.9140625,
+      "timestamp": "2025-04-06 23:09:07.451717",
+      "elapsed_time": 19936.004
+    },
+    {
+      "operation": "Update",
+      "size": 1000,
+      "transaction_time": 2.0322799682617188,
+      "cpu_usage": 76.1,
+      "available_memory": 3380.0234375,
+      "timestamp": "2025-04-06 23:09:07.454018",
+      "elapsed_time": 19938.305
+    },
+    {
+      "operation": "Delete",
+      "size": 1000,
+      "transaction_time": 3.560304641723633,
+      "cpu_usage": 51.1,
+      "available_memory": 3380.16796875,
+      "timestamp": "2025-04-06 23:09:07.457938",
+      "elapsed_time": 19942.225000000002
+    },
+    {
+      "operation": "Create",
+      "size": 2000,
+      "transaction_time": 1.893758773803711,
+      "cpu_usage": 81.5,
+      "available_memory": 3422.2265625,
+      "timestamp": "2025-04-06 23:09:13.308716",
+      "elapsed_time": 25793.002999999997
+    },
+    {
+      "operation": "Update",
+      "size": 2000,
+      "transaction_time": 2.404928207397461,
+      "cpu_usage": 68.8,
+      "available_memory": 3422.3359375,
+      "timestamp": "2025-04-06 23:09:13.311386",
+      "elapsed_time": 25795.673000000003
+    },
+    {
+      "operation": "Delete",
+      "size": 2000,
+      "transaction_time": 5.442142486572266,
+      "cpu_usage": 42.1,
+      "available_memory": 3422.55859375,
+      "timestamp": "2025-04-06 23:09:13.317065",
+      "elapsed_time": 25801.352000000003
+    },
+    {
+      "operation": "Create",
+      "size": 3000,
+      "transaction_time": 1.9440650939941406,
+      "cpu_usage": 82.3,
+      "available_memory": 3408.0078125,
+      "timestamp": "2025-04-06 23:09:23.184167",
+      "elapsed_time": 35668.454
+    },
+    {
+      "operation": "Update",
+      "size": 3000,
+      "transaction_time": 2.2630691528320312,
+      "cpu_usage": 67.5,
+      "available_memory": 3408.1171875,
+      "timestamp": "2025-04-06 23:09:23.186700",
+      "elapsed_time": 35670.986999999994
+    },
+    {
+      "operation": "Delete",
+      "size": 3000,
+      "transaction_time": 4.120826721191406,
+      "cpu_usage": 41.6,
+      "available_memory": 3408.26171875,
+      "timestamp": "2025-04-06 23:09:23.191080",
+      "elapsed_time": 35675.367
+    },
+    {
+      "operation": "Create",
+      "size": 4000,
+      "transaction_time": 1.9750595092773438,
+      "cpu_usage": 79.9,
+      "available_memory": 3396.05859375,
+      "timestamp": "2025-04-06 23:09:36.882102",
+      "elapsed_time": 49366.388999999996
+    },
+    {
+      "operation": "Update",
+      "size": 4000,
+      "transaction_time": 2.227783203125,
+      "cpu_usage": 73.7,
+      "available_memory": 3396.16796875,
+      "timestamp": "2025-04-06 23:09:36.884611",
+      "elapsed_time": 49368.898
+    },
+    {
+      "operation": "Delete",
+      "size": 4000,
+      "transaction_time": 4.395961761474609,
+      "cpu_usage": 49.4,
+      "available_memory": 3396.3125,
+      "timestamp": "2025-04-06 23:09:36.889239",
+      "elapsed_time": 49373.526
+    },
+    {
+      "operation": "Create",
+      "size": 5000,
+      "transaction_time": 1.9230842590332031,
+      "cpu_usage": 79.6,
+      "available_memory": 3405.15625,
+      "timestamp": "2025-04-06 23:09:54.548027",
+      "elapsed_time": 67032.314
+    },
+    {
+      "operation": "Update",
+      "size": 5000,
+      "transaction_time": 2.947092056274414,
+      "cpu_usage": 55.5,
+      "available_memory": 3405.265625,
+      "timestamp": "2025-04-06 23:09:54.551242",
+      "elapsed_time": 67035.529
+    },
+    {
+      "operation": "Delete",
+      "size": 5000,
+      "transaction_time": 5.571842193603516,
+      "cpu_usage": 38.1,
+      "available_memory": 3405.41015625,
+      "timestamp": "2025-04-06 23:09:54.557045",
+      "elapsed_time": 67041.332
+    },
+    {
+      "operation": "Create",
+      "size": 6000,
+      "transaction_time": 1.9578933715820312,
+      "cpu_usage": 80.4,
+      "available_memory": 3395.52734375,
+      "timestamp": "2025-04-06 23:10:16.670048",
+      "elapsed_time": 89154.335
+    },
+    {
+      "operation": "Update",
+      "size": 6000,
+      "transaction_time": 2.749919891357422,
+      "cpu_usage": 57.2,
+      "available_memory": 3395.63671875,
+      "timestamp": "2025-04-06 23:10:16.673070",
+      "elapsed_time": 89157.357
+    },
+    {
+      "operation": "Delete",
+      "size": 6000,
+      "transaction_time": 4.914045333862305,
+      "cpu_usage": 43.6,
+      "available_memory": 3395.26953125,
+      "timestamp": "2025-04-06 23:10:16.678226",
+      "elapsed_time": 89162.513
     }
   ]
 }

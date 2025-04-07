@@ -29,6 +29,20 @@ def clear_all_todos(session):
     for todo in todos:
         session.delete(f"{BASE_URL}/todos/{todo['id']}")
     #print(f"Cleared {len(todos)} todos.")
+
+def clear_all_projects(session):
+    response = session.get(f"{BASE_URL}/projects")
+    print("Clearing all projects...")
+    projects = response.json().get('projects', [])
+    for project in projects:
+        session.delete(f"{BASE_URL}/projects/{project['id']}")
+
+def clear_all_categories(session):
+    response = session.get(f"{BASE_URL}/categories")
+    print("Clearing all categories...")
+    categories = response.json().get('categories', [])
+    for category in categories:
+        session.delete(f"{BASE_URL}/categories/{category['id']}")
 '''
 def clear_all_todos(session):
 
@@ -94,7 +108,7 @@ def measure_operation(operation_func, *args):
 # Function to measure performance of all operations for each test size
 def measure_performance(session):
     # Expand this list for full testing
-    test_sizes = [1, 5, 10, 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+    test_sizes = [1, 10, 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000]
     # test_sizes = [1, 5, 10, 50, 200, 400, 600, 800, 1000, 2000]
     create_results = []
     update_results = []
@@ -347,6 +361,9 @@ if __name__ == "__main__":
     # Run the optimized tests
     print("Starting performance measurements...")
     session = requests.Session()
+    clear_all_categories(session)
+    clear_all_projects(session)
+    clear_all_todos(session)
     create_results, update_results, delete_results, time_series_data = measure_performance(session)
 
     # Plot the results
